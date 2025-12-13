@@ -1,6 +1,7 @@
 import type { NavigateOptions } from "react-router-dom";
 
 import { HeroUIProvider } from "@heroui/system";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useHref, useNavigate } from "react-router-dom";
 
 declare module "@react-types/shared" {
@@ -9,12 +10,23 @@ declare module "@react-types/shared" {
   }
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+      retry: 1,
+    },
+  },
+});
+
 export function Provider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
 
   return (
-    <HeroUIProvider navigate={navigate} useHref={useHref}>
-      {children}
-    </HeroUIProvider>
+    <QueryClientProvider client={queryClient}>
+      <HeroUIProvider navigate={navigate} useHref={useHref}>
+        {children}
+      </HeroUIProvider>
+    </QueryClientProvider>
   );
 }
