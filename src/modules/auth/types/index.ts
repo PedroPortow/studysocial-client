@@ -2,14 +2,11 @@ import { z } from "zod";
 
 import { loginSchema } from "../schemas";
 
-export type LoginRequest = z.infer<typeof loginSchema>;
+import { User } from "@/types";
 
-export interface LoginResponse {
+export type loginParams = z.infer<typeof loginSchema>;
+
+export type LoginResponse = {
   token: string;
-  user: {
-    id: string;
-    email: string;
-    name: string;
-  };
-}
-
+  user: User;
+};

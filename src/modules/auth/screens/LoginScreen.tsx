@@ -1,6 +1,6 @@
 import { Card, CardBody, CardHeader } from "@heroui/card";
 
-import LoginForm from "./components/LoginForm";
+import LoginForm from "../components/LoginForm";
 
 function LoginScreen() {
   return (

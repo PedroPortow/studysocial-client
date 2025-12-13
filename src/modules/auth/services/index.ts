@@ -1,8 +1,10 @@
+import { loginParams, LoginResponse } from "../types";
+
 import { api } from "@/lib/axios";
+import { ApiResponse } from "@/types/api";
 
-import { LoginRequest, LoginResponse } from "../types";
-
-export async function login(data: LoginRequest): Promise<LoginResponse> {
-  return (await api.post<LoginResponse>("/auth/login", data)).data;
+export async function login(
+  data: loginParams,
+): Promise<ApiResponse<LoginResponse>> {
+  return (await api.post<ApiResponse<LoginResponse>>("/auth/login", data)).data;
 }
-

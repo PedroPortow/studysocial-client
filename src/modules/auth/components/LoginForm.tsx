@@ -4,15 +4,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
-import { useLogin } from "../hooks/useLogin";
+import { useLogin } from "../hooks/mutations/useLogin";
 import { loginSchema } from "../schemas";
-import { LoginRequest } from "../types";
+import { loginParams, LoginResponse } from "../types";
+
+import { ApiResponse } from "@/types/api";
 
 function LoginForm() {
   const navigate = useNavigate();
 
-  function onSuccess() {
-    // navigate("/feed");
+  function onSuccess(response: ApiResponse<LoginResponse>) {
+    localStorage.setItem("token", response.data.token);
+    navigate("/");
   }
   const { mutate: login, isPending } = useLogin({
     onSuccess,
@@ -22,15 +25,15 @@ function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginRequest>({
+  } = useForm<loginParams>({
     defaultValues: {
       email: "admin@inf.ufpel.edu.br",
-      password: "123465",
+      password: "123456",
     },
     resolver: zodResolver(loginSchema),
   });
 
-  const submit = (data: LoginRequest) => {
+  const submit = (data: loginParams) => {
     login(data);
   };
 
