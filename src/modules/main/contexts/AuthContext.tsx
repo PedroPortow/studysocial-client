@@ -1,4 +1,5 @@
 import { createContext, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useCurrentUser } from "../hooks/queries/useCurrentUser";
 
@@ -6,18 +7,20 @@ import { User } from "@/types/user";
 
 type AuthContextType = {
   user: User | null;
-  setUser: (user: User | null) => void;
   isLoading: boolean;
+  logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  setUser: () => {},
   isLoading: false,
+  logout: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem("token");
+
+  const navigate = useNavigate();
 
   const { data: user, isLoading } = useCurrentUser({
     enabled: Boolean(token),
@@ -26,6 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     localStorage.removeItem("token");
+    navigate("/login");
   };
 
   const value = useMemo(
