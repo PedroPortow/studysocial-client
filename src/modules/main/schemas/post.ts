@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const postSchema = z.object({
-  content: z.string().min(1, { message: "Conteúdo é obrigatório" }),
-  media: z.instanceof(File, { message: "Arquivo inválido" }).optional(),
+  title: z.string().min(1, { message: "Título é obrigatório" }).max(180, { message: "Título deve ter no máximo 180 caracteres" }),
+  content: z.string().optional(),
+  // media: z.instanceof(File, { message: "Arquivo inválido" }).optional(),
 });
