@@ -1,12 +1,11 @@
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
 import { login } from "../../services";
 import { loginParams, LoginResponse } from "../../types";
 
-import { ApiResponse } from "@/types/api";
-
 type UseLoginOptions = UseMutationOptions<
-  ApiResponse<LoginResponse>,
+  AxiosResponse<LoginResponse>,
   Error,
   loginParams
 >;

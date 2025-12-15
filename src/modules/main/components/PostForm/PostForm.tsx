@@ -42,13 +42,13 @@ function PostForm() {
           <FileInput
             onChange={(files: FileList) => setValue("media", files[0])}
           />
-          {media && (
+          {/* {media && (
             <img
               alt="Media"
               className="w-10 h-10 object-cover"
               src={URL.createObjectURL(media)}
             />
-          )}
+          )} */}
         </div>
         <Button
           color="primary"

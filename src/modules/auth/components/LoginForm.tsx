@@ -1,6 +1,7 @@
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,18 +9,17 @@ import { useLogin } from "../hooks/mutations/useLogin";
 import { loginSchema } from "../schemas";
 import { loginParams, LoginResponse } from "../types";
 
-import { ApiResponse } from "@/types/api";
-
 function LoginForm() {
   const navigate = useNavigate();
 
-  function onSuccess(response: ApiResponse<LoginResponse>) {
+  function onSuccess(response: AxiosResponse<LoginResponse>) {
     localStorage.setItem("token", response.data.token);
-    navigate("/");
+    setTimeout(() => {
+      // gambiarra fedorenta pra resolver minha imbecilidade
+      navigate("/");
+    }, 1000);
   }
-  const { mutate: login, isPending } = useLogin({
-    onSuccess,
-  });
+  const { mutate: login, isPending } = useLogin({ onSuccess });
 
   const {
     register,
@@ -33,9 +33,7 @@ function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
-  const submit = (data: loginParams) => {
-    login(data);
-  };
+  const submit = (data: loginParams) => login(data);
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(submit)}>

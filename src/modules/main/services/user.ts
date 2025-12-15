@@ -1,8 +1,5 @@
-import { api } from "@/lib/axios";
-import { ApiResponse } from "@/types/api";
-import { User } from "@/types/user";
+// import { api } from "@/lib/axios";
 
-// TODO: Arrumar essa bagunça aqui
-export async function getCurrentUser(): Promise<ApiResponse<User>> {
-  return (await api.get<ApiResponse<User>>(`/auth/me`)).data.data;
-}
+// export async function getCurrentUser() {
+//   return await api.get(`/auth/me`);
+// }

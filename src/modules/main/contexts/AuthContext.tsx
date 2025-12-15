@@ -6,7 +6,7 @@ import { useCurrentUser } from "../hooks/queries/useCurrentUser";
 import { User } from "@/types/user";
 
 type AuthContextType = {
-  user: User | null;
+  user?: User;
   isLoading: boolean;
   logout: () => void;
 };
