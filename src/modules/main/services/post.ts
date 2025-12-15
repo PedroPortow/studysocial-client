@@ -19,3 +19,7 @@ export async function getPost(id: number) {
 export async function getMyPosts() {
   return await api.get<Post[]>(`${BASE_KEY}/me`);
 }
+
+export async function deletePost(id: number) {
+  return await api.delete(`${BASE_KEY}/${id}`);
+}
