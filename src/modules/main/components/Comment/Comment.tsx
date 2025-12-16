@@ -1,5 +1,6 @@
 import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
+import { Card, CardBody, CardHeader } from "@heroui/card";
 import {
   Modal,
   ModalBody,
@@ -38,67 +39,72 @@ function Comment({ comment, postId, level = 0 }: CommentProps) {
   return (
     <>
       <div className={level > 0 ? "ml-6 mt-2" : ""}>
-        <div className="flex justify-between">
-          <div className="flex items-center gap-3">
-            <Avatar
-              name={comment.user.full_name}
-              size="sm"
-              src={comment.user.avatar_url}
-            />
-            <div className="flex flex-col">
-              <p className="text-sm font-semibold">{comment.user.full_name}</p>
-              <p className="text-xs text-default-500">
-                {formatDate(comment.created_at)}
-              </p>
+        <Card shadow="none">
+          <CardHeader className="flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <Avatar
+                name={comment.user.full_name}
+                size="sm"
+                src={comment.user.avatar_url}
+              />
+              <div className="flex flex-col">
+                <p className="text-sm font-semibold">
+                  {comment.user.full_name}
+                </p>
+                <p className="text-xs text-default-500">
+                  {formatDate(comment.created_at)}
+                </p>
+              </div>
             </div>
-          </div>
-          {isOwner && (
+            {isOwner && (
+              <Button
+                isIconOnly
+                color="danger"
+                size="sm"
+                variant="light"
+                onPress={onOpen}
+              >
+                <Trash2 size={14} />
+              </Button>
+            )}
+          </CardHeader>
+          <CardBody className="pt-4">
+            <p className="text-sm text-default-600">{comment.content}</p>
+          </CardBody>
+          {level < 3 && (
             <Button
-              isIconOnly
-              color="danger"
+              className="mt-2"
               size="sm"
               variant="light"
-              onPress={onOpen}
+              onPress={() => setIsReplying(!isReplying)}
             >
-              <Trash2 size={14} />
+              {isReplying ? "Cancelar" : "Responder"}
             </Button>
           )}
-        </div>
-        <p className="text-sm text-default-700">{comment.content}</p>
-        {level < 3 && (
-          <Button
-            className="mt-2"
-            size="sm"
-            variant="light"
-            onPress={() => setIsReplying(!isReplying)}
-          >
-            {isReplying ? "Cancelar" : "Responder"}
-          </Button>
-        )}
-        {isReplying && (
-          <div className="mt-2">
-            <CommentForm
-              parentId={comment.id}
-              postId={postId}
-              onSuccess={() => setIsReplying(false)}
-            />
-          </div>
-        )}
-
-        {comment.replies.length > 0 && ( // algo assim?
-          <div>
-            {comment.replies.map((reply) => (
-              <Comment
-                key={reply.id}
-                comment={reply}
-                level={level + 1}
+          {isReplying && (
+            <div className="p-6">
+              <CommentForm
+                parentId={comment.id}
                 postId={postId}
+                onSuccess={() => setIsReplying(false)}
               />
-            ))}
-          </div>
-        )}
-      </div>
+            </div>
+          )}
 
+          {comment.replies.length > 0 && ( // algo assim?
+            <div>
+              {comment.replies.map((reply) => (
+                <Comment
+                  key={reply.id}
+                  comment={reply}
+                  level={level + 1}
+                  postId={postId}
+                />
+              ))}
+            </div>
+          )}
+        </Card>
+      </div>
       {/* TODO: criar um componente separado, por euqnato vai aqui mesmo... */}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>

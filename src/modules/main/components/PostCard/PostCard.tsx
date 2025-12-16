@@ -42,7 +42,7 @@ const PostCard = memo(
     return (
       <Card
         isPressable
-        className="w-full border border-gray-300 p-2"
+        className="w-full p-2 border border-default-200"
         shadow="none"
         onPress={viewPost}
       >
@@ -75,7 +75,7 @@ const PostCard = memo(
         <CardBody className="pt-0">
           <h3 className="font-semibold mb-4">{post.title}</h3>
           {post.content && (
-            <p className="text-slate-500 text-sm">{post.content}</p>
+            <p className="text-default-600 text-sm">{post.content}</p>
           )}
         </CardBody>
         <CardFooter className="gap-1">
