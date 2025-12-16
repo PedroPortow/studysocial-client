@@ -1,4 +1,4 @@
-import { CreatePostParams, Post } from "../types";
+import { CreatePostParams, LikeResponse, Post } from "../types";
 
 import { api } from "@/lib/axios";
 
@@ -22,4 +22,12 @@ export async function getMyPosts() {
 
 export async function deletePost(id: number) {
   return await api.delete(`${BASE_KEY}/${id}`);
+}
+
+export async function toggleLike(postId: number) {
+  return await api.post<LikeResponse>(`${BASE_KEY}/${postId}/like`);
+}
+
+export async function getLikeStatus(postId: number) {
+  return await api.get<LikeResponse>(`${BASE_KEY}/${postId}/like`);
 }

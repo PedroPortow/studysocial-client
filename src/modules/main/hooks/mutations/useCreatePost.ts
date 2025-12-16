@@ -1,4 +1,8 @@
-import { useMutation, UseMutationOptions, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  UseMutationOptions,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
 import { createPost } from "../../services/post";
@@ -15,14 +19,13 @@ export function useCreatePost(options?: UseCreatePostOptions) {
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: createPost,
-    onSuccess: (data, variables, context) => {
-      // Invalida a query de posts para atualizar a timeline
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [RESOURCES.POSTS] });
 
-      // Chama o onSuccess passado nas options, se existir
-      options?.onSuccess?.(data, variables, context);
+      // @ts-expect-error - é a vida
+      options?.onSuccess?.();
     },
-    ...options,
   });
 }

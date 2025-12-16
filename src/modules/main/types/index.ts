@@ -15,3 +15,24 @@ export type Post = {
   updated_at: string;
   user: User;
 };
+
+export type LikeResponse = {
+  post_id: number;
+  likes_count: number;
+  is_liked: boolean;
+};
+
+export type Comment = {
+  id: number;
+  content: string;
+  created_at: string;
+  updated_at: string;
+  parent_id: number | null;
+  user: User;
+  replies: Comment[];
+};
+
+export type CreateCommentParams = {
+  content: string;
+  parent_id?: number | null;
+};

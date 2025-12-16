@@ -1,54 +1,51 @@
 import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@heroui/modal";
-import { Trash2 } from "lucide-react";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
+import { Heart, MessageCircle, Trash2 } from "lucide-react";
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useDeletePost } from "../../hooks/mutations/useDeletePost";
+import { useToggleLike } from "../../hooks/mutations/useToggleLike";
+import { useLikeStatus } from "../../hooks/queries/useLikeStatus";
 import { useAuth } from "../../hooks/useAuth";
 import { Post } from "../../types";
 
+import { formatDate } from "@/utils";
+
 type PostCardProps = {
   post: Post;
+  onPress?: (post: Post) => void;
 };
 
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
+const PostCard = memo(
+  function PostCardImpl({ post, onPress }: PostCardProps) {
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
-  return date.toLocaleDateString("pt-BR", {
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
+    const { data: likeStatus } = useLikeStatus(post.id);
+    const { mutate: toggleLike, isPending: isLiking } = useToggleLike();
 
-function PostCard({ post }: PostCardProps) {
-  const { user } = useAuth();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const navigate = useNavigate();
+    const isOwner = user?.email === post.user.email;
+    const isLiked = likeStatus?.is_liked ?? false;
+    const likesCount = likeStatus?.likes_count ?? 0;
 
-  const { mutate: deletePost, isPending } = useDeletePost({
-    onSuccess: () => onOpenChange(),
-  });
+    function viewPost() {
+      navigate(`/posts/${post.id}`);
+    }
 
-  const isOwner = user?.email === post.user.email;
+    function handleLike() {
+      toggleLike(post.id);
+    }
 
-  function viewPost() {
-    navigate(`/posts/${post.id}`);
-  }
+    const _onPress = () => onPress?.(post);
 
-  return (
-    <>
-      <Card isHoverable isPressable className="w-full" onPress={viewPost}>
+    return (
+      <Card
+        isPressable
+        className="w-full border border-gray-300 p-2"
+        shadow="none"
+        onPress={viewPost}
+      >
         <CardHeader className="flex justify-between">
           <div className="flex gap-3">
             <Avatar
@@ -67,51 +64,47 @@ function PostCard({ post }: PostCardProps) {
             <Button
               isIconOnly
               color="danger"
-              size="sm"
+              size="md"
               variant="light"
-              onPress={onOpen}
+              onPress={_onPress}
             >
               <Trash2 size={16} />
             </Button>
           )}
         </CardHeader>
         <CardBody className="pt-0">
-          <h3 className="font-semibold mb-1">{post.title}</h3>
+          <h3 className="font-semibold mb-4">{post.title}</h3>
           {post.content && (
-            <p className="text-default-600 text-sm">{post.content}</p>
+            <p className="text-slate-500 text-sm">{post.content}</p>
           )}
         </CardBody>
-      </Card>
-
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose: () => void) => (
-            <>
-              <ModalHeader>Excluir publicação</ModalHeader>
-              <ModalBody>
-                <p>Tem certeza que deseja excluir esta publicação?</p>
-                <p className="text-sm text-default-500">
-                  Esta ação não pode ser desfeita.
-                </p>
-              </ModalBody>
-              <ModalFooter>
-                <Button variant="light" onPress={onClose}>
-                  Cancelar
-                </Button>
-                <Button
-                  color="danger"
-                  isLoading={isPending}
-                  onPress={() => deletePost(post.id)}
-                >
-                  Excluir
-                </Button>
-              </ModalFooter>
-            </>
+        <CardFooter className="gap-1">
+          <Button
+            isIconOnly
+            color={isLiked ? "danger" : "default"}
+            isLoading={isLiking}
+            size="sm"
+            variant={isLiked ? "flat" : "light"}
+            onPress={handleLike}
+          >
+            <Heart fill={isLiked ? "currentColor" : "none"} size={16} />
+          </Button>
+          {likesCount > 0 && (
+            <span className="text-sm text-default-500">{likesCount}</span>
           )}
-        </ModalContent>
-      </Modal>
-    </>
-  );
-}
+          <Button isIconOnly color="default" size="sm" variant="light">
+            <MessageCircle size={16} />
+          </Button>
+        </CardFooter>
+      </Card>
+    );
+  },
+  (prevProps, nextProps) => {
+    return (
+      prevProps.post.id === nextProps.post.id &&
+      prevProps.onPress === nextProps.onPress
+    );
+  },
+);
 
 export default PostCard;
