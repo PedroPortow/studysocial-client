@@ -1,23 +1,23 @@
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Link } from "react-router-dom";
 
-import LoginForm from "../components/LoginForm";
+import RegisterForm from "../../components/RegisterForm";
 
-function LoginScreen() {
+function RegisterScreen() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-8">
+    <div className="flex flex-col items-center justify-center min-h-screen py-8 gap-8">
       <h1 className="text-2xl font-bold">Bem vindo ao StudySocial!</h1>
       <Card fullWidth className="max-w-md">
-        <CardHeader>Login</CardHeader>
+        <CardHeader>Cadastro</CardHeader>
         <CardBody>
-          <LoginForm />
+          <RegisterForm />
         </CardBody>
         <CardFooter className="flex justify-center">
           <Link
             className="text-sm text-gray-500 hover:text-gray-700 self-center text-center"
-            to={"/registrar"}
+            to={"/login"}
           >
-            Não tem conta? Faça seu cadastro
+            Já tem conta? Faça login
           </Link>
         </CardFooter>
       </Card>
@@ -25,4 +25,4 @@ function LoginScreen() {
   );
 }
 
-export default LoginScreen;
+export default RegisterScreen;
