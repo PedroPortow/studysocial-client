@@ -23,15 +23,16 @@ export function useCreateComment(options?: UseCreateCommentOptions) {
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: ({ postId, data }) => createComment(postId, data),
     onSuccess: (data, variables, context) => {
-      // Invalida a query de comentários do post
+      // Invalida comentários e contagem
       queryClient.invalidateQueries({
-        queryKey: [RESOURCES.POSTS, variables.postId, "comments"],
+        queryKey: [RESOURCES.COMMENTS, variables.postId],
       });
 
+      // @ts-expect-error - é a vida
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 }

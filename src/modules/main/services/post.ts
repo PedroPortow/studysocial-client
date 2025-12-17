@@ -5,7 +5,21 @@ import { api } from "@/lib/axios";
 const BASE_KEY = "/posts";
 
 export async function createPost(data: CreatePostParams) {
-  return await api.post<Post>(BASE_KEY, data);
+  const formData = new FormData();
+
+  formData.append("title", data.title);
+  if (data.content) {
+    formData.append("content", data.content);
+  }
+  if (data.media) {
+    formData.append("media", data.media); // gambiarra feia pra mandar o media basicamente....
+  }
+
+  return await api.post<Post>(BASE_KEY, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 }
 
 export async function getPosts() {

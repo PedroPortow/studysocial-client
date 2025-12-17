@@ -7,18 +7,21 @@ import { useCreatePost } from "../../hooks/mutations/useCreatePost";
 import { postSchema } from "../../schemas/post";
 import { CreatePostParams } from "../../types";
 
-// import FileInput from "@/components/FileInput/FileInput";
+import FileInput from "@/components/FileInput/FileInput";
 
 function PostForm() {
-  const { register, handleSubmit, watch, reset } = useForm<CreatePostParams>({
-    defaultValues: {
-      title: "",
-      content: "",
-    },
-    resolver: zodResolver(postSchema),
-  });
+  const { register, handleSubmit, watch, reset, setValue } =
+    useForm<CreatePostParams>({
+      defaultValues: {
+        title: "",
+        content: "",
+        media: null,
+      },
+      resolver: zodResolver(postSchema),
+    });
 
   const title = watch("title");
+  const media = watch("media");
 
   const { mutate: createPost, isPending } = useCreatePost({
     onSuccess: () => {
@@ -28,6 +31,10 @@ function PostForm() {
 
   function onSubmit(data: CreatePostParams) {
     createPost(data);
+  }
+
+  function handleMediaChange(file: File | null) {
+    setValue("media", file);
   }
 
   return (
@@ -40,12 +47,8 @@ function PostForm() {
         placeholder="No que você está pensando?"
         {...register("content")}
       />
-      <div className="flex flex-row justify-between">
-        <div className="flex flex-row gap-2">
-          {/* <FileInput
-            onChange={(files: FileList) => setValue("media", files[0])}
-          /> */}
-        </div>
+      <div className="flex flex-row justify-between items-center">
+        <FileInput value={media} onChange={handleMediaChange} />
         <Button
           color="primary"
           isDisabled={!title || title.length === 0}

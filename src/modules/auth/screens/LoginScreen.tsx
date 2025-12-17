@@ -1,6 +1,7 @@
-import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 
 import LoginForm from "../components/LoginForm";
+import { Link } from "react-router-dom";
 
 function LoginScreen() {
   return (
@@ -11,6 +12,14 @@ function LoginScreen() {
         <CardBody>
           <LoginForm />
         </CardBody>
+        <CardFooter className="flex justify-center">
+          <Link
+            className="text-sm text-gray-500 hover:text-gray-700 self-center text-center"
+            to={"/registrar"}
+          >
+            Não tem conta? Faça seu cadastro
+          </Link>
+        </CardFooter>
       </Card>
     </div>
   );

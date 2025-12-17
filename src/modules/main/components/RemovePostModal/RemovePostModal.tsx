@@ -20,8 +20,9 @@ export function RemovePostModal({
   onOpenChange,
   postId,
 }: RemovePostModalProps) {
-  // @ts-expect-error - é a vida
-  const { mutate: deletePost, isPending: isDeleting } = useDeletePost(postId);
+  const { mutate: deletePost, isPending: isDeleting } = useDeletePost({
+    onSuccess: () => onOpenChange(false),
+  });
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -42,7 +43,7 @@ export function RemovePostModal({
               <Button
                 color="danger"
                 isLoading={isDeleting}
-                onPress={() => deletePost(postId)}
+                onPress={() => deletePost(postId!)}
               >
                 Excluir
               </Button>

@@ -22,10 +22,10 @@ import { formatDate } from "@/utils";
 type CommentProps = {
   comment: CommentType;
   postId: number;
-  level?: number;
+  depth?: number;
 };
 
-function Comment({ comment, postId, level = 0 }: CommentProps) {
+function Comment({ comment, postId, depth = 0 }: CommentProps) {
   const { user } = useAuth();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isReplying, setIsReplying] = useState(false);
@@ -38,7 +38,11 @@ function Comment({ comment, postId, level = 0 }: CommentProps) {
 
   return (
     <>
-      <div className={level > 0 ? "ml-6 mt-2" : ""}>
+      <div
+        className={
+          depth > 0 ? "ml-6 mt-2 border-l-2 border-default-200 pl-4" : ""
+        }
+      >
         <Card shadow="none">
           <CardHeader className="flex justify-between items-center">
             <div className="flex items-center gap-3">
@@ -71,16 +75,14 @@ function Comment({ comment, postId, level = 0 }: CommentProps) {
           <CardBody className="pt-4">
             <p className="text-sm text-default-600">{comment.content}</p>
           </CardBody>
-          {level < 3 && (
-            <Button
-              className="mt-2"
-              size="sm"
-              variant="light"
-              onPress={() => setIsReplying(!isReplying)}
-            >
-              {isReplying ? "Cancelar" : "Responder"}
-            </Button>
-          )}
+          <Button
+            className="mt-2"
+            size="sm"
+            variant="light"
+            onPress={() => setIsReplying(!isReplying)}
+          >
+            {isReplying ? "Cancelar" : "Responder"}
+          </Button>
           {isReplying && (
             <div className="p-6">
               <CommentForm
@@ -91,13 +93,13 @@ function Comment({ comment, postId, level = 0 }: CommentProps) {
             </div>
           )}
 
-          {comment.replies.length > 0 && ( // algo assim?
-            <div>
+          {comment.replies && comment.replies.length > 0 && (
+            <div className="mt-2">
               {comment.replies.map((reply) => (
                 <Comment
                   key={reply.id}
                   comment={reply}
-                  level={level + 1}
+                  depth={depth + 1}
                   postId={postId}
                 />
               ))}

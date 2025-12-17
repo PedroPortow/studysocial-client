@@ -12,7 +12,7 @@ type UseCommentsOptions = Omit<
 
 export function useComments(postId: number, options?: UseCommentsOptions) {
   return useSuspenseQuery({
-    queryKey: [RESOURCES.POSTS, postId, "comments"],
+    queryKey: [RESOURCES.COMMENTS, postId],
     queryFn: async () => (await getComments(postId)).data,
     ...options,
   });

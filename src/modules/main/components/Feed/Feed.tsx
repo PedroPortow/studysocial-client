@@ -14,12 +14,13 @@ function Feed() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
-  const openRemovePostModal = useCallback(() => {
+  const openRemovePostModal = useCallback(
     (post: Post) => {
       setSelectedPost(post);
       onOpen();
-    };
-  }, [onOpen]);
+    },
+    [setSelectedPost, onOpen],
+  );
 
   if (isPending) return <Loader />; // todo: botar um suspense na volta, me esqueci q n to no react antigo
 
@@ -35,7 +36,12 @@ function Feed() {
   return (
     <div className="flex flex-col gap-4">
       {posts.map((post) => (
-        <PostCard key={post.id} post={post} onPress={openRemovePostModal} />
+        <PostCard
+          key={post.id}
+          isPressable
+          post={post}
+          onRemovePress={openRemovePostModal}
+        />
       ))}
       <RemovePostModal
         isOpen={isOpen}

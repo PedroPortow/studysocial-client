@@ -2,7 +2,7 @@ import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
 import { ArrowLeft } from "lucide-react";
 import { Suspense } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import CommentForm from "../../components/Comment/CommentForm";
 import FeedLayout from "../../components/FeedLayout/FeedLayout";
@@ -13,9 +13,11 @@ import CommentList from "./components/CommentsList";
 
 function PostScreen() {
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const postId = Number(id);
+  const shouldFocusComment = searchParams.get("comment") === "true";
 
   const { data: post, isPending } = usePost(postId);
 
@@ -46,7 +48,7 @@ function PostScreen() {
           Voltar
         </Button>
         <PostCard post={post} />
-        <CommentForm postId={postId} />
+        <CommentForm autoFocus={shouldFocusComment} postId={postId} />
         <Suspense
           fallback={
             <div className="flex justify-center py-8">

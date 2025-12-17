@@ -25,3 +25,7 @@ export async function updateComment(
 export async function deleteComment(postId: number, commentId: number) {
   return await api.delete(`${BASE_KEY}/${postId}/comments/${commentId}`);
 }
+
+export async function getCommentsCount(postId: number) {
+  return await api.get<number>(`${BASE_KEY}/${postId}/comments/count`);
+}

@@ -22,15 +22,15 @@ export function useDeleteComment(options?: UseDeleteCommentOptions) {
   const queryClient = useQueryClient();
 
   return useMutation({
+    ...options,
     mutationFn: ({ postId, commentId }) => deleteComment(postId, commentId),
     onSuccess: (data, variables, context) => {
-      // Invalida a query de comentários do post
       queryClient.invalidateQueries({
-        queryKey: [RESOURCES.POSTS, variables.postId, "comments"],
+        queryKey: [RESOURCES.COMMENTS, variables.postId],
       });
 
+      // @ts-expect-error - é a vida
       options?.onSuccess?.(data, variables, context);
     },
-    ...options,
   });
 }
