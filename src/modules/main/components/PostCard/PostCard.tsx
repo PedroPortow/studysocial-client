@@ -67,23 +67,30 @@ const PostCard = memo(
               src={post.user.avatar_url}
             />
             <div className="flex flex-col">
-              <p className="text-sm font-semibold">{post.user.full_name}</p>
-              <p className="text-xs text-default-500">
-                {formatDate(post.created_at)}
+              <p className="text-sm font-semibold text-start">
+                {post.user.full_name}
+              </p>
+              <p className="text-xs text-default-500 text-start">
+                {post.user.course?.name}
               </p>
             </div>
           </div>
-          {isOwner && (
-            <Button
-              isIconOnly
-              color="danger"
-              size="md"
-              variant="light"
-              onPress={_onRemovePress}
-            >
-              <Trash2 size={16} />
-            </Button>
-          )}
+          <div className="flex gap-2 items-center">
+            <p className="text-xs text-default-500 text-start">
+              {formatDate(post.created_at)}
+            </p>
+            {isOwner && (
+              <Button
+                isIconOnly
+                color="danger"
+                size="md"
+                variant="light"
+                onPress={_onRemovePress}
+              >
+                <Trash2 size={16} />
+              </Button>
+            )}
+          </div>
         </CardHeader>
         <CardBody className="pt-0">
           <h3 className="font-semibold mb-2">{post.title}</h3>
@@ -115,6 +122,7 @@ const PostCard = memo(
           <Button
             isIconOnly
             color="default"
+            isDisabled={!isPressable}
             size="sm"
             variant="light"
             onPress={handleComment}

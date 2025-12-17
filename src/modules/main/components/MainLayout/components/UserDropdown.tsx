@@ -26,14 +26,7 @@ function UserDropdown() {
               {user?.full_name}
             </span>
           </div>
-          <Avatar
-            classNames={{
-              base: "bg-gradient-to-tr from-teal-400 to-emerald-300 ring-2 ring-white shadow-sm",
-              name: "text-white font-medium text-xs",
-            }}
-            name={user?.full_name.split(" ")[0]}
-            size="sm"
-          />
+          <Avatar size="sm" src={user?.avatar_url} />
           <ChevronDown className="text-slate-400 hidden md:block" size={16} />
         </Button>
       </DropdownTrigger>
