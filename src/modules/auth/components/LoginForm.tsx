@@ -15,9 +15,8 @@ function LoginForm() {
   function onSuccess(response: AxiosResponse<LoginResponse>) {
     localStorage.setItem("token", response.data.token);
     setTimeout(() => {
-      // gambiarra fedorenta pra resolver minha imbecilidade
       navigate("/");
-    }, 1000);
+    }, 500);
   }
   const { mutate: login, isPending } = useLogin({ onSuccess });
 
