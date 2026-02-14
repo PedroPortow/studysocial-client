@@ -37,7 +37,8 @@ function GroupCard({ group, onJoinPress, onLeavePress, isPressable, displayOwner
         {...rest}
         isPressable={isPressable}
         onPress={handleCardClick}
-        className={`w-full ${isPressable ? 'hover:scale-[1.01] transition-transform' : ''}`}
+        shadow="none"
+        className={`w-full p-3 border border-default-200 ${isPressable ? 'hover:scale-[1.01] transition-transform' : ''}`}
       >
         <CardHeader className="flex justify-between items-start">
           <div className="flex flex-col gap-1">

@@ -18,8 +18,8 @@ function Navigation() {
 
   return (
     <Card
-      className="border border-default-100 bg-background/60 backdrop-blur-lg sticky top-8"
-      shadow="sm"
+      className="border-1 border-default-200 bg-background/60 sticky top-8"
+      shadow="none"
     >
       <CardBody className="flex flex-col gap-2 p-4">
         {menuItems.map((item) => {

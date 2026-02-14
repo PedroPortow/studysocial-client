@@ -54,7 +54,7 @@ function GroupDetail() {
         <Button
           className="w-fit"
           startContent={<ArrowLeft size={16} />}
-          variant="ghost"
+          variant="bordered"
           onPress={() => navigate("/grupos")}
         >
           Voltar
@@ -68,7 +68,7 @@ function GroupDetail() {
         />
 
         {(isMember || isOwner) && (
-          <Card>
+          <Card shadow="none" className="border-1 p-3 border-default-200">
             <CardBody>
               <PostForm societyId={groupId} />
             </CardBody>

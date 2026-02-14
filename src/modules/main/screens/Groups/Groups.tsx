@@ -1,7 +1,7 @@
 import { Suspense, useState } from "react";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
-import { Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import FeedLayout from "../../components/FeedLayout/FeedLayout";
 import GroupList from "../../components/GroupList/GroupList";
 import { CreateGroupDialog } from "../../components/CreateGroupDialog/CreateGroupDialog";
@@ -15,18 +15,19 @@ function Groups() {
   return (
     <FeedLayout>
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between items-center">
           <div className="flex flex-col">
             <h2 className="text-xl font-semibold">Grupos</h2>
             <span className="text-slate-500">
-              Confira os grupos da universidade! Entre em grupos bla bla
+              Confira os grupos da universidade!
             </span>
           </div>
           <Button
             color="primary"
+            startContent={<Plus size={18} />}
             onPress={openDialog}
           >
-            Criar Grupo
+            Novo Grupo
           </Button>
         </div>
 

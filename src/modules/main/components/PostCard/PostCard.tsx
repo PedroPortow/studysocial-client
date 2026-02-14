@@ -49,16 +49,14 @@ const PostCard = memo(
       navigate(`/posts/${post.id}?comment=true`);
     }
 
-    console.log({ post });
-
     const _onRemovePress = () => onRemovePress?.(post);
 
     return (
       <Card
-        className="w-full border-none bg-background/60 backdrop-blur-lg "
+        className="w-full border-1 p-3 border-default-200 bg-background/60"
         isHoverable={isPressable}
         isPressable={isPressable}
-        shadow="sm"
+        shadow="none"
         onPress={viewPost}
       >
         <CardHeader className="flex justify-between pb-2">
