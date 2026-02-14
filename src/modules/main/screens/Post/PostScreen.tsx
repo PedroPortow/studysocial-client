@@ -39,8 +39,8 @@ function PostScreen() {
       <div className="flex flex-col gap-4 w-full max-w-xl">
         <Button
           className="w-fit"
-          color="default"
           startContent={<ArrowLeft size={16} />}
+          variant="ghost"
           onPress={() =>
             navigate("/")
           } /** @todo: tem que voltar pra posicção do scroll q tava antes na timeline  */

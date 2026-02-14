@@ -12,13 +12,13 @@ import FileInput from "@/components/FileInput/FileInput";
 function PostForm() {
   const { register, handleSubmit, watch, reset, setValue } =
     useForm<CreatePostParams>({
-      defaultValues: {
-        title: "",
-        content: "",
+    defaultValues: {
+      title: "",
+      content: "",
         media: null,
-      },
-      resolver: zodResolver(postSchema),
-    });
+    },
+    resolver: zodResolver(postSchema),
+  });
 
   const title = watch("title");
   const media = watch("media");

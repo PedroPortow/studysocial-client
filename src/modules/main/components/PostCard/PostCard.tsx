@@ -32,7 +32,7 @@ const PostCard = memo(
     const { data: commentsCount } = useCommentsCount(post.id);
     const { mutate: toggleLike, isPending: isLiking } = useToggleLike();
 
-    const isOwner = user?.email === post.user.email;
+    const isOwner = user?.email === post.user.email || user?.role === "ADMIN";
     const isLiked = likeStatus?.is_liked ?? false;
     const likesCount = likeStatus?.likes_count ?? 0;
 
@@ -54,36 +54,40 @@ const PostCard = memo(
 
     return (
       <Card
-        className="w-full p-2 border border-default-200"
+        className="w-full border-none bg-background/60 backdrop-blur-lg "
+        isHoverable={isPressable}
         isPressable={isPressable}
-        shadow="none"
+        shadow="sm"
         onPress={viewPost}
       >
-        <CardHeader className="flex justify-between">
-          <div className="flex gap-3">
+        <CardHeader className="flex justify-between pb-2">
+          <div className="flex gap-3 items-center">
             <Avatar
+              isBordered
+              className="transition-transform hover:scale-105"
+              color="primary"
               name={post.user.full_name}
               size="sm"
               src={post.user.avatar_url}
             />
             <div className="flex flex-col">
-              <p className="text-sm font-semibold text-start">
+              <p className="text-sm font-semibold text-start leading-tight">
                 {post.user.full_name}
               </p>
-              <p className="text-xs text-default-500 text-start">
+              <p className="text-xs text-default-500 text-start font-medium">
                 {post.user.course?.name}
               </p>
             </div>
           </div>
           <div className="flex gap-2 items-center">
-            <p className="text-xs text-default-500 text-start">
+            <p className="text-xs text-default-400 text-start">
               {formatDate(post.created_at)}
             </p>
             {isOwner && (
               <Button
                 isIconOnly
                 color="danger"
-                size="md"
+                size="sm"
                 variant="light"
                 onPress={_onRemovePress}
               >
@@ -92,46 +96,73 @@ const PostCard = memo(
             )}
           </div>
         </CardHeader>
-        <CardBody className="pt-0">
-          <h3 className="font-semibold mb-2">{post.title}</h3>
+        <CardBody className="py-2 gap-3">
+          <h3 className="font-bold text-lg leading-tight">{post.title}</h3>
           {post.content && (
-            <p className="text-default-600 text-sm mb-3">{post.content}</p>
+            <p className="text-default-600 text-sm whitespace-pre-wrap">
+              {post.content}
+            </p>
           )}
           {post.media_url && (
-            <img
-              alt={post.title}
-              className="w-full rounded-lg object-cover max-h-96"
-              src={post.media_url}
-            />
+            <div className="relative group overflow-hidden rounded-xl bg-default-100">
+              <img
+                alt={post.title}
+                className="w-full object-cover max-h-[500px] transition-transform duration-500 group-hover:scale-[1.02]"
+                src={post.media_url}
+              />
+            </div>
           )}
         </CardBody>
-        <CardFooter className="gap-1">
-          <Button
-            isIconOnly
-            color={isLiked ? "danger" : "default"}
-            isLoading={isLiking}
-            size="sm"
-            variant={isLiked ? "flat" : "light"}
-            onPress={handleLike}
-          >
-            <Heart fill={isLiked ? "currentColor" : "none"} size={16} />
-          </Button>
-          {likesCount > 0 && (
-            <span className="text-sm text-default-500">{likesCount}</span>
-          )}
-          <Button
-            isIconOnly
-            color="default"
-            isDisabled={!isPressable}
-            size="sm"
-            variant="light"
-            onPress={handleComment}
-          >
-            <MessageCircle size={16} />
-          </Button>
-          {commentsCount !== undefined && commentsCount > 0 && (
-            <span className="text-sm text-default-500">{commentsCount}</span>
-          )}
+        <CardFooter className="gap-4 pt-2">
+          <div className="flex items-center gap-1 group/like">
+            <Button
+              isIconOnly
+              className="group-hover/like:bg-danger/10 transition-colors"
+              color={isLiked ? "danger" : "default"}
+              isLoading={isLiking}
+              radius="full"
+              size="sm"
+              variant={isLiked ? "flat" : "light"}
+              onPress={handleLike}
+            >
+              <Heart
+                className={
+                  isLiked ? "fill-current" : "group-hover/like:text-danger"
+                }
+                size={18}
+              />
+            </Button>
+            {likesCount > 0 && (
+              <span
+                className={`text-sm font-medium ${isLiked ? "text-danger" : "text-default-500 group-hover/like:text-danger"}`}
+              >
+                {likesCount}
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-1 group/comment">
+            <Button
+              isIconOnly
+              className="group-hover/comment:bg-primary/10 transition-colors"
+              color="default"
+              isDisabled={!isPressable}
+              radius="full"
+              size="sm"
+              variant="light"
+              onPress={handleComment}
+            >
+              <MessageCircle
+                className="group-hover/comment:text-primary"
+                size={18}
+              />
+            </Button>
+            {commentsCount !== undefined && commentsCount > 0 && (
+              <span className="text-sm font-medium text-default-500 group-hover/comment:text-primary">
+                {commentsCount}
+              </span>
+            )}
+          </div>
         </CardFooter>
       </Card>
     );

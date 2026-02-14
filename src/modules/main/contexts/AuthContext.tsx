@@ -23,8 +23,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
   const { data: user, isLoading } = useCurrentUser({
-    enabled: Boolean(token),
     retry: false,
+    enabled: Boolean(token),
   });
 
   const logout = () => {

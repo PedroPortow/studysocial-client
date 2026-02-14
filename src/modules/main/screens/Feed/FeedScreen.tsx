@@ -1,5 +1,3 @@
-import { Divider } from "@heroui/divider";
-
 import Feed from "../../components/Feed/Feed";
 import FeedLayout from "../../components/FeedLayout/FeedLayout";
 import PostForm from "../../components/PostForm/PostForm";
@@ -7,9 +5,10 @@ import PostForm from "../../components/PostForm/PostForm";
 function FeedScreen() {
   return (
     <FeedLayout>
-      <PostForm />
-      <Divider />
-      <Feed />
+      <div className="flex flex-col gap-8">
+        <PostForm />
+        <Feed />
+      </div>
     </FeedLayout>
   );
 }

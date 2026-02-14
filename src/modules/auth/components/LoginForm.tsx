@@ -16,7 +16,7 @@ function LoginForm() {
     localStorage.setItem("token", response.data.token);
     setTimeout(() => {
       navigate("/");
-    }, 300);
+    }, 1000);
   }
   const { mutate: login, isPending } = useLogin({ onSuccess });
 
