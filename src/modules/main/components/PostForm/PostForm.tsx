@@ -9,13 +9,18 @@ import { CreatePostParams } from "../../types";
 
 import FileInput from "@/components/FileInput/FileInput";
 
-function PostForm() {
+interface PostFormProps {
+  societyId?: number;
+}
+
+function PostForm({ societyId }: PostFormProps = {}) {
   const { register, handleSubmit, watch, reset, setValue } =
     useForm<CreatePostParams>({
     defaultValues: {
       title: "",
       content: "",
-        media: null,
+      media: null,
+      society_id: societyId || null,
     },
     resolver: zodResolver(postSchema),
   });
@@ -25,12 +30,22 @@ function PostForm() {
 
   const { mutate: createPost, isPending } = useCreatePost({
     onSuccess: () => {
-      reset();
+      reset({
+        title: "",
+        content: "",
+        media: null,
+        society_id: societyId || null,
+      });
     },
   });
 
   function onSubmit(data: CreatePostParams) {
-    createPost(data);
+    // Adiciona o societyId se estiver disponível
+    const postData = {
+      ...data,
+      society_id: societyId || null,
+    };
+    createPost(postData);
   }
 
   function handleMediaChange(file: File | null) {

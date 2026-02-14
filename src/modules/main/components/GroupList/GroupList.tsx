@@ -34,7 +34,7 @@ function GroupList({ searchTerm = "" }: GroupListProps) {
     <div className="flex flex-col gap-4">
       {filteredGroups.map(group => {
         return (
-          <GroupCard group={group} key={group.id} />
+          <GroupCard group={group} key={group.id} isPressable />
         )
       })}
     </div>

@@ -7,4 +7,5 @@ export const postSchema = z.object({
     .max(180, { message: "Título deve ter no máximo 180 caracteres" }),
   content: z.string().optional(),
   media: z.instanceof(File).nullable().optional(),
+  society_id: z.number().nullable().optional(),
 });

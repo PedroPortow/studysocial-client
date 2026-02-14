@@ -42,7 +42,7 @@ export function CreateGroupDialog({
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur">
       <ModalContent>
         {(onClose: () => void) => (
           <form onSubmit={handleSubmit}>

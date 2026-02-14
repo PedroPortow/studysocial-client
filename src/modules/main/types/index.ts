@@ -11,6 +11,8 @@ export type Post = {
   title: string;
   content: string;
   media_url: string | null;
+  society_id: number | null;
+  society_name: string | null;
   created_at: string;
   updated_at: string;
   user: User;

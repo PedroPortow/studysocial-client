@@ -7,8 +7,9 @@ export function useJoinGroup() {
 
   return useMutation({
     mutationFn: (id: number) => joinGroup(id),
-    onSuccess: () => {
+    onSuccess: (response, groupId) => {
       queryClient.invalidateQueries({ queryKey: [RESOURCES.GROUPS] });
+      queryClient.invalidateQueries({ queryKey: [RESOURCES.GROUPS, groupId] });
     },
   });
 }

@@ -8,8 +8,12 @@ import { RemovePostModal } from "../RemovePostModal/RemovePostModal";
 
 import Loader from "./Loader";
 
-function Feed() {
-  const { data: posts, isPending } = usePosts();
+interface FeedProps {
+  societyId?: number;
+}
+
+function Feed({ societyId }: FeedProps = {}) {
+  const { data: posts } = usePosts({ societyId });
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
@@ -21,8 +25,6 @@ function Feed() {
     },
     [setSelectedPost, onOpen],
   );
-
-  if (isPending) return <Loader />; // todo: botar um suspense na volta, me esqueci q n to no react antigo
 
   if (!posts || posts.length === 0) {
     // todo: fazer um componente de empty state global e arrumar isso aq
@@ -51,5 +53,7 @@ function Feed() {
     </div>
   );
 }
+
+Feed.Loader = Loader;
 
 export default Feed;

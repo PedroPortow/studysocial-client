@@ -14,6 +14,9 @@ export async function createPost(data: CreatePostParams) {
   if (data.media) {
     formData.append("media", data.media); // gambiarra feia pra mandar o media basicamente....
   }
+  if (data.society_id) {
+    formData.append("society_id", data.society_id.toString());
+  }
 
   return await api.post<Post>(BASE_KEY, formData, {
     headers: {
@@ -24,6 +27,10 @@ export async function createPost(data: CreatePostParams) {
 
 export async function getPosts() {
   return await api.get<Post[]>(BASE_KEY);
+}
+
+export async function getPostsBySociety(societyId: number) {
+  return await api.get<Post[]>(`${BASE_KEY}/society/${societyId}`);
 }
 
 export async function getPost(id: number) {

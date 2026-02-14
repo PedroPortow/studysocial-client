@@ -1,7 +1,8 @@
 import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
-import { Heart, MessageCircle, Trash2 } from "lucide-react";
+import { Chip } from "@heroui/chip";
+import { Heart, MessageCircle, Trash2, Users } from "lucide-react";
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -77,6 +78,17 @@ const PostCard = memo(
               <p className="text-xs text-default-500 text-start font-medium">
                 {post.user.course?.name}
               </p>
+              {post.society_name && (
+                <Chip
+                  className="mt-1"
+                  color="primary"
+                  size="sm"
+                  startContent={<Users size={12} />}
+                  variant="flat"
+                >
+                  {post.society_name}
+                </Chip>
+              )}
             </div>
           </div>
           <div className="flex gap-2 items-center">

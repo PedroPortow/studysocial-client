@@ -7,8 +7,9 @@ export function useLeaveGroup() {
 
   return useMutation({
     mutationFn: (id: number) => leaveGroup(id),
-    onSuccess: () => {
+    onSuccess: (response, groupId) => {
       queryClient.invalidateQueries({ queryKey: [RESOURCES.GROUPS] });
+      queryClient.invalidateQueries({ queryKey: [RESOURCES.GROUPS, groupId] });
     },
   });
 }

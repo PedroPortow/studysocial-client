@@ -7,6 +7,7 @@ export interface Group {
   description: string;
   owner: User;
   member_count: number;
+  is_member: boolean;
   created_at: string;
   updated_at: string;
 }

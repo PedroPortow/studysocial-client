@@ -20,9 +20,9 @@ export async function deleteGroup(id: number) {
 }
 
 export async function joinGroup(id: number) {
-  return await api.post(`${BASE_KEY}/${id}/join`);
+  return await api.post<Group>(`${BASE_KEY}/${id}/join`);
 }
 
 export async function leaveGroup(id: number) {
-  return await api.post(`${BASE_KEY}/${id}/leave`);
+  return await api.post<Group>(`${BASE_KEY}/${id}/leave`);
 }

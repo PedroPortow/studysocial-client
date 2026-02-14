@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Group } from "@/types";
-import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
+import { Card, CardBody, CardFooter, CardHeader, CardProps } from "@heroui/card";
 import { Button } from "@heroui/button";
 import { Plus, Trash, Users, X } from "lucide-react";
 import { useCurrentUser } from "../../../../hooks/queries/useCurrentUser";
 import { DeleteGroupDialog } from "../../../DeleteGroupDialog/DeleteGroupDialog";
+import { is } from "zod/v4/locales";
 
-interface GroupCardProps {
+interface GroupCardProps extends CardProps {
   group: Group;
   onJoinPress: () => void;
   onLeavePress: () => void;
 }
 
-function GroupCard({ group, onJoinPress, onLeavePress }: GroupCardProps) {
+function GroupCard({ group, onJoinPress, onLeavePress, isPressable, ...rest }: GroupCardProps) {
   const navigate = useNavigate();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { data: currentUser } = useCurrentUser({ enabled: true });
@@ -37,9 +38,10 @@ function GroupCard({ group, onJoinPress, onLeavePress }: GroupCardProps) {
   return (
     <>
       <Card
-        isPressable
+        {...rest}
+        isPressable={isPressable}
         onPress={handleCardClick}
-        className="w-full hover:scale-[1.01] transition-transform"
+        className={`w-full ${isPressable ? 'hover:scale-[1.01] transition-transform' : ''}`}
       >
         <CardHeader className="flex justify-between items-start">
           <div className="flex flex-col">
@@ -48,51 +50,56 @@ function GroupCard({ group, onJoinPress, onLeavePress }: GroupCardProps) {
               {group?.description}
             </p>
           </div>
-          {canDelete && (
-            <div onClick={(e) => e.stopPropagation()}>
-              <Button
-                size="sm"
-                color="danger"
-                variant="light"
-                onPress={handleDelete}
-                startContent={
-                  <Trash className="w-4 h-4" />
-                }
-              >
-                Excluir
-              </Button>
-            </div>
-          )}
-          {onJoinPress && (
-            <div onClick={(e) => e.stopPropagation()}>
-              <Button
-                size="sm"
-                color="primary"
-                variant="light"
-                onPress={join}
-                startContent={
-                  <Plus className="w-4 h-4" />
-                }
-              >
-                Entrar
-              </Button>
-            </div>
-          )}
-          {onLeavePress && (
-            <div onClick={(e) => e.stopPropagation()}>
-              <Button
-                size="sm"
-                color="danger"
-                variant="light"
-                onPress={leave}
-                startContent={
-                  <X className="w-4 h-4" />
-                }
-              >
-                Sair
-              </Button>
-            </div>
-          )}
+          {canDelete || onJoinPress || onLeavePress
+            ? <div className="flex flex-row">
+                {canDelete && (
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <Button
+                      size="sm"
+                      color="danger"
+                      variant="light"
+                      onPress={handleDelete}
+                      startContent={
+                        <Trash className="w-4 h-4" />
+                      }
+                    >
+                      Excluir
+                    </Button>
+                  </div>
+                )}
+                {onJoinPress && (
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <Button
+                      size="sm"
+                      color="primary"
+                      variant="light"
+                      onPress={join}
+                      startContent={
+                        <Plus className="w-4 h-4" />
+                      }
+                    >
+                      Entrar
+                    </Button>
+                  </div>
+                )}
+                {onLeavePress && (
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <Button
+                      size="sm"
+                      color="danger"
+                      variant="light"
+                      onPress={leave}
+                      startContent={
+                        <X className="w-4 h-4" />
+                      }
+                    >
+                      Sair
+                    </Button>
+                  </div>
+                )}
+              </div>
+            : null
+          }
         </CardHeader>
         <CardBody>
 

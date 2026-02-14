@@ -17,7 +17,7 @@ function Groups() {
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-start">
           <div className="flex flex-col">
-            <h1>Grupos</h1>
+            <h2 className="text-xl font-semibold">Grupos</h2>
             <span className="text-slate-500">
               Confira os grupos da universidade! Entre em grupos bla bla
             </span>

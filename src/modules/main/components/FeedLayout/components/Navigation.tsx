@@ -23,7 +23,8 @@ function Navigation() {
     >
       <CardBody className="flex flex-col gap-2 p-4">
         {menuItems.map((item) => {
-          const isActive = pathname === item.path;
+          const isActive = pathname.split('/')[1] === item.path.split('/')[1];
+
           const Icon = item.icon;
 
           return (
