@@ -8,17 +8,19 @@ import { useCurrentUser } from "../../../../hooks/queries/useCurrentUser";
 import { DeleteGroupDialog } from "../../../DeleteGroupDialog/DeleteGroupDialog";
 interface GroupCardProps extends CardProps {
   group: Group;
+  displayOwnerBadge: boolean;
   onJoinPress?: () => void;
   onLeavePress?: () => void;
 }
 
-function GroupCard({ group, onJoinPress, onLeavePress, isPressable, ...rest }: GroupCardProps) {
+function GroupCard({ group, onJoinPress, onLeavePress, isPressable, displayOwnerBadge, ...rest }: GroupCardProps) {
   const navigate = useNavigate();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { data: currentUser } = useCurrentUser({ enabled: true });
 
   const isOwner = currentUser?.email === group.owner.email;
   const isAdmin = currentUser?.role === "ADMIN";
+  const isMember = group.is_member;
   const canDelete = isOwner || isAdmin;
 
   const handleCardClick = () => {
@@ -45,9 +47,14 @@ function GroupCard({ group, onJoinPress, onLeavePress, isPressable, ...rest }: G
             </p>
           </div>
           <div className="flex flex-col items-end gap-2">
-            {isOwner && (
+            {displayOwnerBadge && isOwner && (
               <div className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm">
                 Dono do Grupo
+              </div>
+            )}
+            {!isOwner && isMember && (
+              <div className="px-3 py-1 bg-success-100 text-success-700 rounded-full text-sm">
+                Membro
               </div>
             )}
             {(canDelete || onJoinPress || onLeavePress) && (

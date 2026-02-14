@@ -60,8 +60,9 @@ function GroupDetail() {
           Voltar
         </Button>
 
-        <GroupCard 
-          group={group} 
+        <GroupCard
+          group={group}
+          displayOwnerBadge
           onJoinPress={!isOwner && !isMember ? handleJoinGroup : undefined}
           onLeavePress={!isOwner && isMember ? handleLeaveGroup : undefined}
         />
