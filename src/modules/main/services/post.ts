@@ -25,12 +25,8 @@ export async function createPost(data: CreatePostParams) {
   });
 }
 
-export async function getPosts() {
-  return await api.get<Post[]>(BASE_KEY);
-}
-
-export async function getPostsBySociety(societyId: number) {
-  return await api.get<Post[]>(`${BASE_KEY}/society/${societyId}`);
+export async function getPosts(params?: { society_id?: number }) {
+  return await api.get<Post[]>(BASE_KEY, { params });
 }
 
 export async function getPost(id: number) {

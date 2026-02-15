@@ -1,8 +1,8 @@
 import { Button } from "@heroui/button";
 import { Spinner } from "@heroui/spinner";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { ArrowLeft, Users } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Suspense } from "react";
 
 import FeedLayout from "../../components/FeedLayout/FeedLayout";
 import { useGroup } from "../../hooks/queries/useGroup";
@@ -10,7 +10,6 @@ import { useCurrentUser } from "../../hooks/queries/useCurrentUser";
 import { useJoinGroup } from "../../hooks/mutations/useJoinGroup";
 import { useLeaveGroup } from "../../hooks/mutations/useLeaveGroup";
 import Feed from "../../components/Feed/Feed";
-import { Suspense } from "react";
 import PostForm from "../../components/PostForm/PostForm";
 import { GroupCard } from "../../components/GroupList/components";
 
@@ -61,24 +60,17 @@ function GroupDetail() {
         </Button>
 
         <GroupCard
-          group={group}
           displayOwnerBadge
+          group={group}
           onJoinPress={!isOwner && !isMember ? handleJoinGroup : undefined}
           onLeavePress={!isOwner && isMember ? handleLeaveGroup : undefined}
         />
 
-        {(isMember || isOwner) && (
-          <Card shadow="none" className="border-1 p-3 border-default-200">
-            <CardBody>
-              <PostForm societyId={groupId} />
-            </CardBody>
-          </Card>
-        )}
+        {(isMember || isOwner) && <PostForm societyId={groupId} />}
 
         <Suspense fallback={<Feed.Loader />}>
           <Feed societyId={groupId} />
         </Suspense>
-
       </div>
     </FeedLayout>
   );

@@ -1,6 +1,6 @@
 import { UseQueryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
-import { getPosts, getPostsBySociety } from "../../services/post";
+import { getPosts } from "../../services/post";
 import { Post } from "../../types";
 
 import RESOURCES from "@/constants/resources";
@@ -20,10 +20,7 @@ export function usePosts(options?: UsePostsOptions) {
       ? [RESOURCES.POSTS, RESOURCES.GROUPS, societyId] 
       : [RESOURCES.POSTS],
     queryFn: async () => {
-      if (societyId) {
-        return (await getPostsBySociety(societyId)).data;
-      }
-      return (await getPosts()).data;
+      return (await getPosts({ society_id: societyId })).data;
     },
     ...queryOptions,
   });
