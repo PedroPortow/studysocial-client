@@ -10,7 +10,6 @@ import { useCurrentUser } from "../../hooks/queries/useCurrentUser";
 import { useJoinGroup } from "../../hooks/mutations/useJoinGroup";
 import { useLeaveGroup } from "../../hooks/mutations/useLeaveGroup";
 import Feed from "../../components/Feed/Feed";
-import PostForm from "../../components/PostForm/PostForm";
 import { GroupCard } from "../../components/GroupList/components";
 
 function GroupDetail() {
@@ -48,7 +47,7 @@ function GroupDetail() {
   };
 
   return (
-    <FeedLayout>
+    <FeedLayout societyId={groupId}>
       <div className="flex flex-col gap-4 w-full max-w-xl">
         <Button
           className="w-fit"
@@ -65,8 +64,6 @@ function GroupDetail() {
           onJoinPress={!isOwner && !isMember ? handleJoinGroup : undefined}
           onLeavePress={!isOwner && isMember ? handleLeaveGroup : undefined}
         />
-
-        {(isMember || isOwner) && <PostForm societyId={groupId} />}
 
         <Suspense fallback={<Feed.Loader />}>
           <Feed societyId={groupId} />

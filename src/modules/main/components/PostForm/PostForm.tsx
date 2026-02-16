@@ -1,11 +1,11 @@
 import { Button } from "@heroui/button";
 import { Input, Textarea } from "@heroui/input";
+import { Select, SelectItem } from "@heroui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Pencil } from "lucide-react";
+import { useForm, Controller } from "react-hook-form";
 
 import { useCreatePost } from "../../hooks/mutations/useCreatePost";
+import { useUserGroups } from "../../hooks/queries/useUserGroups";
 import { postSchema } from "../../schemas/post";
 import { CreatePostParams } from "../../types";
 
@@ -13,10 +13,13 @@ import FileInput from "@/components/FileInput/FileInput";
 
 interface PostFormProps {
   societyId?: number;
+  onClose?: () => void;
 }
 
-function PostForm({ societyId }: PostFormProps = {}) {
-  const { register, handleSubmit, watch, reset, setValue } =
+function PostForm({ societyId, onClose }: PostFormProps = {}) {
+  const { data: userGroups } = useUserGroups();
+
+  const { register, handleSubmit, watch, reset, setValue, control } =
     useForm<CreatePostParams>({
       defaultValues: {
         title: "",
@@ -36,12 +39,13 @@ function PostForm({ societyId }: PostFormProps = {}) {
       media: null,
       society_id: societyId || null,
     });
+    onClose?.();
   }
 
   function onSubmit(data: CreatePostParams) {
     const postData = {
       ...data,
-      society_id: societyId || null,
+      society_id: data.society_id ? Number(data.society_id) : null,
     };
 
     createPost(postData);
@@ -55,26 +59,58 @@ function PostForm({ societyId }: PostFormProps = {}) {
   const media = watch("media");
 
   return (
-    <Card className="p-2 border-1 border-default-200" shadow="none">
-      <CardHeader className="flex flex-row items-center gap-2 text-md font-medium text-start">
-        <Pencil className="text-primary" size={16} />
-        <span>Nova Postagem</span>
-      </CardHeader>
-      <CardBody>
-        <form
-          className="w-full flex flex-col gap-2"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Input
-            placeholder="Digite o título da postagem"
-            {...register("title")}
-          />
-          <Textarea
-            placeholder="No que você está pensando?"
-            {...register("content")}
-          />
-          <div className="flex flex-row justify-between items-center">
-            <FileInput value={media} onChange={handleMediaChange} />
+    <form
+      className="w-full flex flex-col gap-4"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Input
+        label="Título"
+        placeholder="Digite o título da postagem"
+        variant="bordered"
+        {...register("title")}
+      />
+      
+      <Textarea
+        label="Conteúdo"
+        placeholder="No que você está pensando?"
+        variant="bordered"
+        minRows={3}
+        {...register("content")}
+      />
+
+      {userGroups && userGroups.length > 0 && (
+        <Controller
+          name="society_id"
+          control={control}
+          render={({ field }) => (
+            <Select
+              label="Grupo"
+              placeholder="Selecione um grupo (opcional)"
+              variant="bordered"
+              selectedKeys={field.value ? [String(field.value)] : []}
+              onSelectionChange={(keys) => {
+                const selected = Array.from(keys)[0];
+                field.onChange(selected ? Number(selected) : null);
+              }}
+            >
+              {userGroups.map((group) => (
+                <SelectItem key={group.id} textValue={group.name}>
+                  {group.name}
+                </SelectItem>
+              ))}
+            </Select>
+          )}
+        />
+      )}
+
+      <div className="flex flex-row justify-between items-center pt-2">
+        <FileInput value={media} onChange={handleMediaChange} />
+        <div className="flex gap-2">
+            {onClose && (
+                <Button color="danger" variant="light" onPress={onClose}>
+                    Cancelar
+                </Button>
+            )}
             <Button
               color="primary"
               isDisabled={!title || title.length === 0}
@@ -83,10 +119,9 @@ function PostForm({ societyId }: PostFormProps = {}) {
             >
               Postar
             </Button>
-          </div>
-        </form>
-      </CardBody>
-    </Card>
+        </div>
+      </div>
+    </form>
   );
 }
 

@@ -26,3 +26,7 @@ export async function joinGroup(id: number) {
 export async function leaveGroup(id: number) {
   return await api.post<Group>(`${BASE_KEY}/${id}/leave`);
 }
+
+export async function getUserGroups() {
+  return await api.get<Group[]>(`${BASE_KEY}/my`);
+}
