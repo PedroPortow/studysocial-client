@@ -6,6 +6,7 @@ import {
 import { AxiosResponse } from "axios";
 
 import { createGroup } from "../../services/group";
+
 import { CreateGroupParams, Group } from "@/types";
 import RESOURCES from "@/constants/resources";
 

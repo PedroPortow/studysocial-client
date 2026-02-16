@@ -30,7 +30,7 @@ export function useUpdateUser(options?: UseUpdateUserOptions) {
     onSuccess: (data, variables, context) => {
       // Invalidate users list to refetch
       queryClient.invalidateQueries({ queryKey: [RESOURCES.USERS] });
-      
+
       // Also invalidate current user in case admin edited themselves
       queryClient.invalidateQueries({ queryKey: [RESOURCES.USER] });
 

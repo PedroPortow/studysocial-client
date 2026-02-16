@@ -42,7 +42,7 @@ export function CreateGroupDialog({
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur">
+    <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent>
         {(onClose: () => void) => (
           <form onSubmit={handleSubmit}>
@@ -50,18 +50,18 @@ export function CreateGroupDialog({
             <ModalBody>
               <Input
                 autoFocus
+                isRequired
                 label="Nome do Grupo"
                 placeholder="Digite o nome do grupo"
-                variant="bordered"
                 value={name}
+                variant="bordered"
                 onChange={(e) => setName(e.target.value)}
-                isRequired
               />
               <Textarea
                 label="Descrição"
                 placeholder="Descreva o grupo (opcional)"
-                variant="bordered"
                 value={description}
+                variant="bordered"
                 onChange={(e) => setDescription(e.target.value)}
               />
             </ModalBody>
@@ -71,9 +71,9 @@ export function CreateGroupDialog({
               </Button>
               <Button
                 color="primary"
-                type="submit"
-                isLoading={isPending}
                 isDisabled={!name.trim()}
+                isLoading={isPending}
+                type="submit"
               >
                 Criar Grupo
               </Button>

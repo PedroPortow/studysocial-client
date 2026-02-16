@@ -1,14 +1,15 @@
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
-import { BookOpen, Home, LogOut, Users } from "lucide-react";
+import { BookOpen, Home, Plus, Users } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDisclosure } from "@heroui/modal";
 
-import { useAuth } from "@/modules/main/hooks/useAuth";
+import { CreatePostDialog } from "../../CreatePostDialog/CreatePostDialog";
 
 function Navigation() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const menuItems = [
     { label: "Início", icon: Home, path: "/" },
@@ -23,7 +24,7 @@ function Navigation() {
     >
       <CardBody className="flex flex-col gap-2 p-4">
         {menuItems.map((item) => {
-          const isActive = pathname.split('/')[1] === item.path.split('/')[1];
+          const isActive = pathname.split("/")[1] === item.path.split("/")[1];
 
           const Icon = item.icon;
 
@@ -47,14 +48,15 @@ function Navigation() {
 
         <div className="h-px bg-default-100 my-2" />
 
+        <CreatePostDialog isOpen={isOpen} onOpenChange={onOpenChange} />
         <Button
-          className="justify-start gap-4 text-danger hover:bg-danger/10"
+          className="justify-start gap-4 text-primary hover:bg-primary/10"
           size="lg"
           variant="light"
-          onPress={logout}
+          onPress={onOpen}
         >
-          <LogOut size={20} />
-          Sair
+          <Plus size={20} />
+          Nova Publicação
         </Button>
       </CardBody>
     </Card>

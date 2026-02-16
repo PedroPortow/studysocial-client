@@ -2,6 +2,7 @@ import { Suspense, useState } from "react";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Plus, Search } from "lucide-react";
+
 import FeedLayout from "../../components/FeedLayout/FeedLayout";
 import GroupList from "../../components/GroupList/GroupList";
 import { CreateGroupDialog } from "../../components/CreateGroupDialog/CreateGroupDialog";
@@ -32,14 +33,14 @@ function Groups() {
         </div>
 
         <Input
-          placeholder="Pesquisar grupos por nome..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          startContent={<Search size={18} className="text-default-400" />}
-          className="max-w-md"
           isClearable
+          className="max-w-md"
           className="bg-white"
+          placeholder="Pesquisar grupos por nome..."
+          startContent={<Search className="text-default-400" size={18} />}
+          value={searchTerm}
           variant="bordered"
+          onChange={(e) => setSearchTerm(e.target.value)}
           onClear={() => setSearchTerm("")}
         />
 
@@ -53,7 +54,7 @@ function Groups() {
         onOpenChange={setIsCreateDialogOpen}
       />
     </FeedLayout>
-  )
+  );
 }
 
 export default Groups;

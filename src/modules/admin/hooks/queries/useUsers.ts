@@ -1,4 +1,7 @@
-import { useSuspenseQuery, UseSuspenseQueryOptions } from "@tanstack/react-query";
+import {
+  useSuspenseQuery,
+  UseSuspenseQueryOptions,
+} from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
 import { getUsers } from "../../services/users";

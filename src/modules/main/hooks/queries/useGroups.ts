@@ -1,8 +1,8 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
 import { getGroups } from "../../services/group";
-import { Group } from "@/types";
 
+import { Group } from "@/types";
 import RESOURCES from "@/constants/resources";
 
 type UseGroupsOptions = Omit<

@@ -1,7 +1,9 @@
 import { Select, SelectItem, SelectProps } from "@heroui/select";
+
 import { ROLE } from "@/types/user";
 
-interface RoleSelectProps extends Omit<SelectProps, "children" | "selectedKeys" | "onSelectionChange"> {
+interface RoleSelectProps
+  extends Omit<SelectProps, "children" | "selectedKeys" | "onSelectionChange"> {
   value: ROLE;
   onValueChange: (role: ROLE) => void;
 }
@@ -11,15 +13,20 @@ const ROLE_LABELS: Record<ROLE, string> = {
   [ROLE.ADMIN]: "Administrador",
 };
 
-export function RoleSelect({ value, onValueChange, ...props }: RoleSelectProps) {
+export function RoleSelect({
+  value,
+  onValueChange,
+  ...props
+}: RoleSelectProps) {
   return (
     <Select
       label="Função"
       placeholder="Selecione a função"
-      variant="bordered"
       selectedKeys={[value]}
+      variant="bordered"
       onSelectionChange={(keys) => {
         const selected = Array.from(keys)[0] as ROLE;
+
         if (selected) onValueChange(selected);
       }}
       {...props}

@@ -69,27 +69,28 @@ function PostForm({ societyId, onClose }: PostFormProps = {}) {
         variant="bordered"
         {...register("title")}
       />
-      
+
       <Textarea
         label="Conteúdo"
+        minRows={3}
         placeholder="No que você está pensando?"
         variant="bordered"
-        minRows={3}
         {...register("content")}
       />
 
       {userGroups && userGroups.length > 0 && (
         <Controller
-          name="society_id"
           control={control}
+          name="society_id"
           render={({ field }) => (
             <Select
               label="Grupo"
               placeholder="Selecione um grupo (opcional)"
-              variant="bordered"
               selectedKeys={field.value ? [String(field.value)] : []}
+              variant="bordered"
               onSelectionChange={(keys) => {
                 const selected = Array.from(keys)[0];
+
                 field.onChange(selected ? Number(selected) : null);
               }}
             >
@@ -106,19 +107,19 @@ function PostForm({ societyId, onClose }: PostFormProps = {}) {
       <div className="flex flex-row justify-between items-center pt-2">
         <FileInput value={media} onChange={handleMediaChange} />
         <div className="flex gap-2">
-            {onClose && (
-                <Button color="danger" variant="light" onPress={onClose}>
-                    Cancelar
-                </Button>
-            )}
-            <Button
-              color="primary"
-              isDisabled={!title || title.length === 0}
-              isLoading={isPending}
-              type="submit"
-            >
-              Postar
+          {onClose && (
+            <Button color="danger" variant="light" onPress={onClose}>
+              Cancelar
             </Button>
+          )}
+          <Button
+            color="primary"
+            isDisabled={!title || title.length === 0}
+            isLoading={isPending}
+            type="submit"
+          >
+            Postar
+          </Button>
         </div>
       </div>
     </form>

@@ -1,7 +1,6 @@
 import { Course, loginParams, RegisterParams } from "../types";
 
 import { api } from "@/lib/axios";
-
 import { User } from "@/types";
 
 const BASE_KEY = "/auth";

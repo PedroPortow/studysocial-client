@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { leaveGroup } from "../../services/group";
+
 import RESOURCES from "@/constants/resources";
 
 export function useLeaveGroup() {

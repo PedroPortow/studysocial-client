@@ -21,7 +21,10 @@ type CommentFormProps = {
 };
 
 const CommentForm = forwardRef<HTMLTextAreaElement, CommentFormProps>(
-  function CommentForm({ postId, parentId = null, onSuccess, autoFocus = false }, ref) {
+  function CommentForm(
+    { postId, parentId = null, onSuccess, autoFocus = false },
+    ref,
+  ) {
     const { register, handleSubmit, reset } = useForm<CommentFormData>({
       defaultValues: {
         content: "",

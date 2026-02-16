@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 import Feed from "../../components/Feed/Feed";
 import FeedLayout from "../../components/FeedLayout/FeedLayout";
 

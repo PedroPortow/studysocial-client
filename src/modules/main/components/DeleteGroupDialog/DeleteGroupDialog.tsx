@@ -6,8 +6,8 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@heroui/modal";
-import { useDeleteGroup } from "../../hooks/mutations/useDeleteGroup";
 
+import { useDeleteGroup } from "../../hooks/mutations/useDeleteGroup";
 
 type DeleteGroupDialogProps = {
   isOpen: boolean;

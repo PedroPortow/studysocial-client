@@ -1,3 +1,5 @@
+import type { User } from "@/types/user";
+
 import { useState } from "react";
 import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
@@ -18,7 +20,6 @@ import { EditUserDialog } from "../EditUserDialog/EditUserDialog";
 import { useUsers } from "../../hooks/queries/useUsers";
 
 import { usePagination } from "@/hooks/usePagination";
-import { User } from "@/types/user";
 
 const PER_PAGE = 4;
 
@@ -42,6 +43,7 @@ export function UsersTable() {
   return (
     <>
       <Table
+        aria-labelledby="users-table"
         bottomContent={
           totalPages > 1 ? (
             <div className="flex w-full justify-center">

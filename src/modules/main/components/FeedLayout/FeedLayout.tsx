@@ -1,11 +1,10 @@
-
 import { Button } from "@heroui/button";
 import { useDisclosure } from "@heroui/modal";
 import { Plus } from "lucide-react";
 
-import Navigation from "./components/Navigation";
-
 import { CreatePostDialog } from "../CreatePostDialog/CreatePostDialog";
+
+import Navigation from "./components/Navigation";
 
 interface FeedLayoutProps {
   children: React.ReactNode;
@@ -56,8 +55,8 @@ function FeedLayout({ children, societyId }: FeedLayoutProps) {
 
       <CreatePostDialog
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
         societyId={societyId}
+        onOpenChange={onOpenChange}
       />
     </div>
   );

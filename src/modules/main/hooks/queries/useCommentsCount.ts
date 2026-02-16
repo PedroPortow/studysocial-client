@@ -9,7 +9,10 @@ type UseCommentsCountOptions = Omit<
   "queryKey" | "queryFn"
 >;
 
-export function useCommentsCount(postId: number, options?: UseCommentsCountOptions) {
+export function useCommentsCount(
+  postId: number,
+  options?: UseCommentsCountOptions,
+) {
   return useQuery({
     queryKey: [RESOURCES.COMMENTS, postId, "count"],
     queryFn: async () => (await getCommentsCount(postId)).data,

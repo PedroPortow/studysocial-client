@@ -1,11 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Group } from "@/types";
-import { Card, CardBody, CardFooter, CardHeader, CardProps } from "@heroui/card";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  CardProps,
+} from "@heroui/card";
 import { Button } from "@heroui/button";
 import { Plus, Trash, Users, X } from "lucide-react";
+
 import { useCurrentUser } from "../../../../hooks/queries/useCurrentUser";
 import { DeleteGroupDialog } from "../../../DeleteGroupDialog/DeleteGroupDialog";
+
+import { Group } from "@/types";
 interface GroupCardProps extends CardProps {
   group: Group;
   displayOwnerBadge: boolean;
@@ -13,7 +21,14 @@ interface GroupCardProps extends CardProps {
   onLeavePress?: () => void;
 }
 
-function GroupCard({ group, onJoinPress, onLeavePress, isPressable, displayOwnerBadge, ...rest }: GroupCardProps) {
+function GroupCard({
+  group,
+  onJoinPress,
+  onLeavePress,
+  isPressable,
+  displayOwnerBadge,
+  ...rest
+}: GroupCardProps) {
   const navigate = useNavigate();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { data: currentUser } = useCurrentUser({ enabled: true });
@@ -35,17 +50,15 @@ function GroupCard({ group, onJoinPress, onLeavePress, isPressable, displayOwner
     <>
       <Card
         {...rest}
+        className={`w-full p-3 border border-default-200 ${isPressable ? "hover:scale-[1.01] transition-transform" : ""}`}
         isPressable={isPressable}
-        onPress={handleCardClick}
         shadow="none"
-        className={`w-full p-3 border border-default-200 ${isPressable ? 'hover:scale-[1.01] transition-transform' : ''}`}
+        onPress={handleCardClick}
       >
         <CardHeader className="flex justify-between items-start">
           <div className="flex flex-col gap-1">
             <h3 className="text-lg font-semibold text-start">{group.name}</h3>
-            <p className="text-slate-400 text-start">
-              {group?.description}
-            </p>
+            <p className="text-slate-400 text-start">{group?.description}</p>
           </div>
           <div className="flex flex-col items-end gap-2">
             {displayOwnerBadge && isOwner && (
@@ -63,13 +76,11 @@ function GroupCard({ group, onJoinPress, onLeavePress, isPressable, displayOwner
                 {canDelete && (
                   <div onClick={(e) => e.stopPropagation()}>
                     <Button
-                      size="sm"
                       color="danger"
+                      size="sm"
+                      startContent={<Trash className="w-4 h-4" />}
                       variant="light"
                       onPress={handleDelete}
-                      startContent={
-                        <Trash className="w-4 h-4" />
-                      }
                     >
                       Excluir
                     </Button>
@@ -78,13 +89,11 @@ function GroupCard({ group, onJoinPress, onLeavePress, isPressable, displayOwner
                 {onJoinPress && (
                   <div onClick={(e) => e.stopPropagation()}>
                     <Button
-                      size="sm"
                       color="primary"
+                      size="sm"
+                      startContent={<Plus className="w-4 h-4" />}
                       variant="light"
                       onPress={onJoinPress}
-                      startContent={
-                        <Plus className="w-4 h-4" />
-                      }
                     >
                       Entrar
                     </Button>
@@ -93,13 +102,11 @@ function GroupCard({ group, onJoinPress, onLeavePress, isPressable, displayOwner
                 {onLeavePress && (
                   <div onClick={(e) => e.stopPropagation()}>
                     <Button
-                      size="sm"
                       color="danger"
+                      size="sm"
+                      startContent={<X className="w-4 h-4" />}
                       variant="light"
                       onPress={onLeavePress}
-                      startContent={
-                        <X className="w-4 h-4" />
-                      }
                     >
                       Sair do grupo
                     </Button>
@@ -109,22 +116,23 @@ function GroupCard({ group, onJoinPress, onLeavePress, isPressable, displayOwner
             )}
           </div>
         </CardHeader>
-        <CardBody>
-
-        </CardBody>
+        <CardBody />
         <CardFooter className="pt-0">
           <div className="flex items-center gap-1 text-sm text-default-500">
             <Users size={16} />
-            <span>{group.member_count ?? 0} {group.member_count === 1 ? 'membro' : 'membros'}</span>
+            <span>
+              {group.member_count ?? 0}{" "}
+              {group.member_count === 1 ? "membro" : "membros"}
+            </span>
           </div>
         </CardFooter>
       </Card>
 
       <DeleteGroupDialog
-        isOpen={isDeleteModalOpen}
-        onOpenChange={setIsDeleteModalOpen}
         groupId={group.id}
         groupName={group.name}
+        isOpen={isDeleteModalOpen}
+        onOpenChange={setIsDeleteModalOpen}
       />
     </>
   );

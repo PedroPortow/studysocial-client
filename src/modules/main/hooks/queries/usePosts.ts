@@ -16,8 +16,8 @@ export function usePosts(options?: UsePostsOptions) {
   const { societyId, ...queryOptions } = options || {};
 
   return useSuspenseQuery({
-    queryKey: societyId 
-      ? [RESOURCES.POSTS, RESOURCES.GROUPS, societyId] 
+    queryKey: societyId
+      ? [RESOURCES.POSTS, RESOURCES.GROUPS, societyId]
       : [RESOURCES.POSTS],
     queryFn: async () => {
       return (await getPosts({ society_id: societyId })).data;
