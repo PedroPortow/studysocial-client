@@ -13,7 +13,7 @@ type UseCoursesOptions = Omit<
 export function useCourses(options?: UseCoursesOptions) {
   return useQuery({
     queryKey: [RESOURCES.COURSES],
-    queryFn: async () => (await getCourses()).data,
+    queryFn: async () => (await getCourses())?.data,
     ...options,
   });
 }
