@@ -25,7 +25,7 @@ export function CreatePostDialog({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Criar Nova Postagem
+              Criar Novo Post
             </ModalHeader>
             <ModalBody>
               <PostForm societyId={societyId} onClose={onClose} />

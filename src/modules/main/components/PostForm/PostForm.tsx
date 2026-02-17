@@ -65,7 +65,7 @@ function PostForm({ societyId, onClose }: PostFormProps = {}) {
     >
       <Input
         label="Título"
-        placeholder="Digite o título da postagem"
+        placeholder="Digite o título do post"
         variant="bordered"
         {...register("title")}
       />

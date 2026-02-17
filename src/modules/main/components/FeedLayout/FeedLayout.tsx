@@ -47,7 +47,7 @@ function FeedLayout({ children, societyId }: FeedLayoutProps) {
               <Plus size={24} />
             </div>
             <span className="opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 font-medium">
-              Nova postagem
+              Novo Post
             </span>
           </div>
         </Button>

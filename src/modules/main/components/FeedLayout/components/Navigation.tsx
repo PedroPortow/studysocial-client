@@ -56,7 +56,7 @@ function Navigation() {
           onPress={onOpen}
         >
           <Plus size={20} />
-          Nova Publicação
+          Novo Post
         </Button>
       </CardBody>
     </Card>
