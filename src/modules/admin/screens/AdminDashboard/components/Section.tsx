@@ -1,10 +1,10 @@
-import React from "react";
+import React from "react"
 
 interface SectionProps {
-  children: React.ReactNode;
-  title: string;
-  description?: string;
-  RightContent?: React.ReactNode;
+  children: React.ReactNode
+  title: string
+  description?: string
+  RightContent?: React.ReactNode
 }
 
 function Section({ children, title, description, RightContent }: SectionProps) {
@@ -21,7 +21,7 @@ function Section({ children, title, description, RightContent }: SectionProps) {
       </div>
       {children}
     </section>
-  );
+  )
 }
 
-export default Section;
+export default Section

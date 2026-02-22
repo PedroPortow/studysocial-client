@@ -1,17 +1,17 @@
-import { Suspense, useState } from "react";
-import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
-import { Plus, Search } from "lucide-react";
+import { Suspense, useState } from "react"
+import { Button } from "@heroui/button"
+import { Input } from "@heroui/input"
+import { Plus, Search } from "lucide-react"
 
-import FeedLayout from "../../components/FeedLayout/FeedLayout";
-import GroupList from "../../components/GroupList/GroupList";
-import { CreateGroupDialog } from "../../components/CreateGroupDialog/CreateGroupDialog";
+import FeedLayout from "../../components/FeedLayout/FeedLayout"
+import GroupList from "../../components/GroupList/GroupList"
+import { CreateGroupDialog } from "../../components/CreateGroupDialog/CreateGroupDialog"
 
 function Groups() {
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
 
-  const openDialog = () => setIsCreateDialogOpen(true);
+  const openDialog = () => setIsCreateDialogOpen(true)
 
   return (
     <FeedLayout>
@@ -34,7 +34,6 @@ function Groups() {
 
         <Input
           isClearable
-          className="max-w-md"
           className="bg-white"
           placeholder="Pesquisar grupos por nome..."
           startContent={<Search className="text-default-400" size={18} />}
@@ -54,7 +53,7 @@ function Groups() {
         onOpenChange={setIsCreateDialogOpen}
       />
     </FeedLayout>
-  );
+  )
 }
 
-export default Groups;
+export default Groups

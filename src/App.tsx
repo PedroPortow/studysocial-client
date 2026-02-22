@@ -1,14 +1,14 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom"
 
-import ProtectedRoute from "./components/ProtectedRoute";
-import AdminRoute from "./components/AdminRoute";
-import LoginScreen from "./modules/auth/screens/LoginScreen";
-import RegisterScreen from "./modules/auth/screens/RegisterScreen/RegisterScreen";
-import FeedScreen from "./modules/main/screens/Feed/FeedScreen";
-import PostScreen from "./modules/main/screens/Post/PostScreen";
-import GroupsScreen from "./modules/main/screens/Groups/Groups";
-import GroupDetailScreen from "./modules/main/screens/GroupDetail/GroupDetail";
-import AdminDashboardScreen from "./modules/admin/screens/Dashboard/AdminDashboardScreen";
+import ProtectedRoute from "./components/ProtectedRoute"
+import AdminRoute from "./components/AdminRoute"
+import LoginScreen from "./modules/auth/screens/LoginScreen"
+import RegisterScreen from "./modules/auth/screens/RegisterScreen/RegisterScreen"
+import FeedScreen from "./modules/main/screens/Feed/FeedScreen"
+import PostScreen from "./modules/main/screens/Post/PostScreen"
+import GroupsScreen from "./modules/main/screens/Groups/Groups"
+import GroupDetailScreen from "./modules/main/screens/GroupDetail/GroupDetail"
+import AdminDashboard from "./modules/admin/screens/AdminDashboard/AdminDashboard"
 
 function App() {
   return (
@@ -22,10 +22,10 @@ function App() {
         <Route element={<GroupDetailScreen />} path="/grupos/:id" />
       </Route>
       <Route element={<AdminRoute />}>
-        <Route element={<AdminDashboardScreen />} path="/admin" />
+        <Route element={<AdminDashboard />} path="/admin" />
       </Route>
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App

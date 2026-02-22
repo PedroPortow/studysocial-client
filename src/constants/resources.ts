@@ -5,6 +5,7 @@ const RESOURCES = {
   COMMENTS: "comments",
   COURSES: "courses",
   GROUPS: "groups",
+  BANS: "bans",
 };
 
 export default RESOURCES;

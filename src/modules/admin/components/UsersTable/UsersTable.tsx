@@ -1,11 +1,11 @@
-import type { User } from "@/types/user";
+import type { User } from "@/types/user"
 
-import { useState } from "react";
-import { Avatar } from "@heroui/avatar";
-import { Button } from "@heroui/button";
-import { Chip } from "@heroui/chip";
-import { Pagination } from "@heroui/pagination";
-import { useDisclosure } from "@heroui/modal";
+import { useState } from "react"
+import { Avatar } from "@heroui/avatar"
+import { Button } from "@heroui/button"
+import { Chip } from "@heroui/chip"
+import { Pagination } from "@heroui/pagination"
+import { useDisclosure } from "@heroui/modal"
 import {
   Table,
   TableHeader,
@@ -13,32 +13,32 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-} from "@heroui/table";
-import { Pencil, Trash2 } from "lucide-react";
+} from "@heroui/table"
+import { Pencil, Trash2 } from "lucide-react"
 
-import { EditUserDialog } from "../EditUserDialog/EditUserDialog";
-import { useUsers } from "../../hooks/queries/useUsers";
+import { EditUserDialog } from "../EditUserDialog/EditUserDialog"
+import { useUsers } from "../../hooks/queries/useUsers"
 
-import { usePagination } from "@/hooks/usePagination";
+import { usePagination } from "@/hooks/usePagination"
 
-const PER_PAGE = 4;
+const PER_PAGE = 4
 
 export function UsersTable() {
-  const { data: response } = useUsers();
-  const users = response?.data || [];
+  const { data: response } = useUsers()
+  const users = response?.data || []
 
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   const { currentPage, totalPages, data, setPage } = usePagination({
     data: users,
     perPage: PER_PAGE,
-  });
+  })
 
   const handleEdit = (user: User) => {
-    setSelectedUser(user);
-    onOpen();
-  };
+    setSelectedUser(user)
+    onOpen()
+  }
 
   return (
     <>
@@ -136,5 +136,5 @@ export function UsersTable() {
         onOpenChange={onOpenChange}
       />
     </>
-  );
+  )
 }

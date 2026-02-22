@@ -1,24 +1,56 @@
-import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AxiosResponse } from "axios";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@heroui/button"
+import { Input } from "@heroui/input"
+import { addToast } from "@heroui/toast"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { AxiosError, AxiosResponse } from "axios"
+import { useForm } from "react-hook-form"
+import { Link, useNavigate } from "react-router-dom"
 
-import { useLogin } from "../hooks/mutations/useLogin";
-import { loginSchema } from "../schemas";
-import { loginParams, LoginResponse } from "../types";
+import { useLogin } from "../hooks/mutations/useLogin"
+import { loginSchema } from "../schemas"
+import { loginParams, LoginResponse } from "../types"
+
+import { Ban, BanType } from "@/types/ban"
+import { formatDate } from "@/utils"
 
 function LoginForm() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   function onSuccess(response: AxiosResponse<LoginResponse>) {
-    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("token", response.data.token)
     setTimeout(() => {
-      navigate("/");
-    }, 1000);
+      navigate("/")
+    }, 1000)
   }
-  const { mutate: login, isPending } = useLogin({ onSuccess });
+
+  function onError(error: AxiosError) {
+    if (error.response?.status === 403 && error.response?.data) {
+      const ban = error.response.data as Ban
+
+      let description = ""
+
+      if (ban.type === BanType.PERMANENT) {
+        description = "Sua conta foi banida permanentemente."
+      } else if (ban.expiresAt) {
+        description = `Sua conta foi banida até ${formatDate(ban.expiresAt)}.`
+      }
+
+      if (ban.reason) {
+        description += `\n\nMotivo: ${ban.reason}`
+      }
+
+      console.log("eae")
+
+      addToast({
+        title: "Você foi banido!",
+        description,
+        color: "danger",
+        timeout: 8000,
+      })
+    }
+  }
+
+  const { mutate: login, isPending } = useLogin({ onSuccess, onError })
 
   const {
     register,
@@ -30,9 +62,9 @@ function LoginForm() {
       password: "123456",
     },
     resolver: zodResolver(loginSchema),
-  });
+  })
 
-  const submit = (data: loginParams) => login(data);
+  const submit = (data: loginParams) => login(data)
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(submit)}>
@@ -69,7 +101,7 @@ function LoginForm() {
         </Button>
       </div>
     </form>
-  );
+  )
 }
 
-export default LoginForm;
+export default LoginForm
