@@ -6,6 +6,6 @@ const RESOURCES = {
   COURSES: "courses",
   GROUPS: "groups",
   BANS: "bans",
-};
+}
 
-export default RESOURCES;
+export default RESOURCES
