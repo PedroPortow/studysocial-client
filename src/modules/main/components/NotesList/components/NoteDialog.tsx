@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@heroui/button"
 import { Input, Textarea } from "@heroui/input"
 import { Select, SelectItem } from "@heroui/select"
@@ -11,46 +11,77 @@ import {
 } from "@heroui/modal"
 
 import { useCreateNote } from "../../../hooks/mutations/useCreateNote"
+import { useUpdateNote } from "../../../hooks/mutations/useUpdateNote"
+import { useSubjects } from "../../../hooks/queries/useSubjects"
+import { Note } from "../../../types"
 
-const MOCK_SUBJECTS = [
-  { id: 1, name: "Cálculo I" },
-  { id: 2, name: "Algoritmos e Estrutura de Dados" },
-  { id: 3, name: "Banco de Dados" },
-  { id: 4, name: "Engenharia de Software" },
-  { id: 5, name: "Redes de Computadores" },
-]
-
-type CreateNoteDialogProps = {
+type NoteDialogProps = {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
+  note?: Note | null
 }
 
-export function CreateNoteDialog({
-  isOpen,
-  onOpenChange,
-}: CreateNoteDialogProps) {
+export function NoteDialog({ isOpen, onOpenChange, note }: NoteDialogProps) {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [subjectId, setSubjectId] = useState<string>("")
 
-  const { mutate: createNote, isPending } = useCreateNote({
+  const isEditing = !!note
+
+  const { data: subjects = [] } = useSubjects()
+
+  const { mutate: createNote, isPending: isCreating } = useCreateNote({
     onSuccess: () => {
+      resetAndClose()
+    },
+  })
+
+  const { mutate: updateNote, isPending: isUpdating } = useUpdateNote({
+    onSuccess: () => {
+      resetAndClose()
+    },
+  })
+
+  const isPending = isCreating || isUpdating
+
+  useEffect(() => {
+    if (note && isOpen) {
+      setTitle(note.title)
+      setContent(note.content ?? "")
+      setSubjectId(String(note.subject_id))
+    } else if (!isOpen) {
       setTitle("")
       setContent("")
       setSubjectId("")
-      onOpenChange(false)
-    },
-  })
+    }
+  }, [note, isOpen])
+
+  function resetAndClose() {
+    setTitle("")
+    setContent("")
+    setSubjectId("")
+    onOpenChange(false)
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!title.trim() || !subjectId) return
 
-    createNote({
-      title: title.trim(),
-      content: content.trim() || undefined,
-      subject_id: Number(subjectId),
-    })
+    if (isEditing) {
+      updateNote({
+        id: note.id,
+        data: {
+          title: title.trim(),
+          content: content.trim() || undefined,
+        },
+      })
+    } else {
+      createNote({
+        title: title.trim(),
+        content: content.trim() || undefined,
+        subject_id: Number(subjectId),
+      })
+    }
   }
 
   return (
@@ -58,7 +89,9 @@ export function CreateNoteDialog({
       <ModalContent>
         {(onClose: () => void) => (
           <form onSubmit={handleSubmit}>
-            <ModalHeader>Nova Anotação</ModalHeader>
+            <ModalHeader>
+              {isEditing ? "Editar Anotação" : "Nova Anotação"}
+            </ModalHeader>
             <ModalBody>
               <Input
                 autoFocus
@@ -71,7 +104,9 @@ export function CreateNoteDialog({
                 onChange={(e) => setTitle(e.target.value)}
               />
               <Select
+                isDisabled={isEditing}
                 isRequired
+                items={subjects}
                 label="Disciplina"
                 placeholder="Selecione a disciplina"
                 selectedKeys={subjectId ? [subjectId] : []}
@@ -82,11 +117,11 @@ export function CreateNoteDialog({
                   setSubjectId(selected ? String(selected) : "")
                 }}
               >
-                {MOCK_SUBJECTS.map((subject) => (
+                {(subject) => (
                   <SelectItem key={String(subject.id)}>
                     {subject.name}
                   </SelectItem>
-                ))}
+                )}
               </Select>
               <Textarea
                 label="Conteúdo"
@@ -107,7 +142,7 @@ export function CreateNoteDialog({
                 isLoading={isPending}
                 type="submit"
               >
-                Criar Anotação
+                {isEditing ? "Salvar" : "Criar Anotação"}
               </Button>
             </ModalFooter>
           </form>

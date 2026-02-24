@@ -7,6 +7,9 @@ const RESOURCES = {
   GROUPS: "groups",
   BANS: "bans",
   NOTES: "notes",
+  SUBJECTS: "subjects",
+  ASSESSMENTS: "assessments",
+  ABSENCES: "absences",
 }
 
 export default RESOURCES

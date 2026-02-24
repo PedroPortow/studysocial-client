@@ -1,6 +1,7 @@
 import { Button } from "@heroui/button"
 import { Card, CardBody } from "@heroui/card"
 import { BookOpen, Home, Plus, Users } from "lucide-react"
+import { startTransition } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { useDisclosure } from "@heroui/modal"
 
@@ -38,7 +39,7 @@ function Navigation() {
               }`}
               size="lg"
               variant="light"
-              onPress={() => navigate(item.path)}
+              onPress={() => startTransition(() => navigate(item.path))}
             >
               <Icon fill={isActive ? "currentColor" : "none"} size={20} />
               {item.label}

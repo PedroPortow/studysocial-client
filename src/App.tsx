@@ -10,6 +10,7 @@ import GroupsScreen from "./modules/main/screens/Groups/Groups"
 import GroupDetailScreen from "./modules/main/screens/GroupDetail/GroupDetail"
 import AdminDashboard from "./modules/admin/screens/AdminDashboard/AdminDashboard"
 import AcademicDiary from "./modules/main/screens/AcademicDiary/AcademicDiaryScreen"
+import SubjectDetailScreen from "./modules/main/screens/SubjectDetail/SubjectDetailScreen"
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route element={<GroupsScreen />} path="/grupos" />
         <Route element={<GroupDetailScreen />} path="/grupos/:id" />
         <Route element={<AcademicDiary />} path="/diarioacademico" />
+        <Route element={<SubjectDetailScreen />} path="/diarioacademico/disciplinas/:id" />
       </Route>
       <Route element={<AdminRoute />}>
         <Route element={<AdminDashboard />} path="/admin" />
