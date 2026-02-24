@@ -4,13 +4,13 @@ export enum ROLE {
 }
 
 export interface Course {
-  name: string;
+  name: string
 }
 
 export interface User {
-  email: string;
-  full_name: string;
-  avatar_url: string;
-  role: ROLE;
-  course?: Course;
+  email: string
+  full_name: string
+  avatar_url: string
+  role: ROLE
+  course?: Course
 }

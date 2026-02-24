@@ -1,15 +1,15 @@
-import { Comment, CreateCommentParams } from "../types";
+import { Comment, CreateCommentParams } from "../types"
 
-import { api } from "@/lib/axios";
+import { api } from "@/lib/axios"
 
-const BASE_KEY = "/posts";
+const BASE_KEY = "/posts"
 
 export async function createComment(postId: number, data: CreateCommentParams) {
-  return await api.post<Comment>(`${BASE_KEY}/${postId}/comments`, data);
+  return await api.post<Comment>(`${BASE_KEY}/${postId}/comments`, data)
 }
 
 export async function getComments(postId: number) {
-  return await api.get<Comment[]>(`${BASE_KEY}/${postId}/comments`);
+  return await api.get<Comment[]>(`${BASE_KEY}/${postId}/comments`)
 }
 
 export async function updateComment(
@@ -19,13 +19,13 @@ export async function updateComment(
 ) {
   return await api.put<Comment>(`${BASE_KEY}/${postId}/comments/${commentId}`, {
     content,
-  });
+  })
 }
 
 export async function deleteComment(postId: number, commentId: number) {
-  return await api.delete(`${BASE_KEY}/${postId}/comments/${commentId}`);
+  return await api.delete(`${BASE_KEY}/${postId}/comments/${commentId}`)
 }
 
 export async function getCommentsCount(postId: number) {
-  return await api.get<number>(`${BASE_KEY}/${postId}/comments/count`);
+  return await api.get<number>(`${BASE_KEY}/${postId}/comments/count`)
 }

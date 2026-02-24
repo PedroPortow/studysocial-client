@@ -1,45 +1,45 @@
-import { useState } from "react";
-import { Button } from "@heroui/button";
-import { Input, Textarea } from "@heroui/input";
+import { useState } from "react"
+import { Button } from "@heroui/button"
+import { Input, Textarea } from "@heroui/input"
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@heroui/modal";
+} from "@heroui/modal"
 
-import { useCreateGroup } from "../../hooks/mutations/useCreateGroup";
+import { useCreateGroup } from "../../hooks/mutations/useCreateGroup"
 
 type CreateGroupDialogProps = {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-};
+  isOpen: boolean
+  onOpenChange: (open: boolean) => void
+}
 
 export function CreateGroupDialog({
   isOpen,
   onOpenChange,
 }: CreateGroupDialogProps) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
 
   const { mutate: createGroup, isPending } = useCreateGroup({
     onSuccess: () => {
-      setName("");
-      setDescription("");
-      onOpenChange(false);
+      setName("")
+      setDescription("")
+      onOpenChange(false)
     },
-  });
+  })
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim()) return;
+    e.preventDefault()
+    if (!name.trim()) return
 
     createGroup({
       name: name.trim(),
       description: description.trim(),
-    });
-  };
+    })
+  }
 
   return (
     <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -82,5 +82,5 @@ export function CreateGroupDialog({
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }

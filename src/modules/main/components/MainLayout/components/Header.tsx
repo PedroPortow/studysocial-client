@@ -1,6 +1,6 @@
-import { Navbar, NavbarBrand, NavbarContent } from "@heroui/navbar";
+import { Navbar, NavbarBrand, NavbarContent } from "@heroui/navbar"
 
-import UserDropdown from "./UserDropdown";
+import UserDropdown from "./UserDropdown"
 
 function Header() {
   return (
@@ -34,7 +34,7 @@ function Header() {
         <UserIcon className="text-gray-500 size-4" />
       </div> */}
     </Navbar>
-  );
+  )
 }
 
-export default Header;
+export default Header

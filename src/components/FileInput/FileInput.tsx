@@ -1,19 +1,19 @@
-import { Image, X } from "lucide-react";
+import { Image, X } from "lucide-react"
 
 type FileInputProps = {
-  onChange: (file: File | null) => void;
-  value?: File | null;
-};
+  onChange: (file: File | null) => void
+  value?: File | null
+}
 
 function FileInput({ onChange, value }: FileInputProps) {
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0] || null;
+    const file = event.target.files?.[0] || null
 
-    onChange(file);
+    onChange(file)
   }
 
   function handleRemove() {
-    onChange(null);
+    onChange(null)
   }
 
   if (value) {
@@ -31,7 +31,7 @@ function FileInput({ onChange, value }: FileInputProps) {
           <X className="w-4 h-4 text-blue-500" />
         </button>
       </div>
-    );
+    )
   }
 
   return (
@@ -45,7 +45,7 @@ function FileInput({ onChange, value }: FileInputProps) {
         onChange={handleFileChange}
       />
     </label>
-  );
+  )
 }
 
-export default FileInput;
+export default FileInput

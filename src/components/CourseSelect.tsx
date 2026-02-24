@@ -1,11 +1,11 @@
-import { Select, SelectItem, SelectProps } from "@heroui/select";
+import { Select, SelectItem, SelectProps } from "@heroui/select"
 
-import { useCourses } from "@/modules/auth/hooks/queries/useCourses";
+import { useCourses } from "@/modules/auth/hooks/queries/useCourses"
 
 interface CourseSelectProps
   extends Omit<SelectProps, "children" | "selectedKeys" | "onSelectionChange"> {
-  value?: string;
-  onValueChange: (courseName: string) => void;
+  value?: string
+  onValueChange: (courseName: string) => void
 }
 
 export function CourseSelect({
@@ -13,7 +13,7 @@ export function CourseSelect({
   onValueChange,
   ...props
 }: CourseSelectProps) {
-  const { data: courses = [] } = useCourses();
+  const { data: courses = [] } = useCourses()
 
   return (
     <Select
@@ -22,9 +22,9 @@ export function CourseSelect({
       selectedKeys={value ? [value] : []}
       variant="bordered"
       onSelectionChange={(keys) => {
-        const selected = Array.from(keys)[0] as string;
+        const selected = Array.from(keys)[0] as string
 
-        onValueChange(selected || "");
+        onValueChange(selected || "")
       }}
       {...props}
     >
@@ -32,5 +32,5 @@ export function CourseSelect({
         <SelectItem key={course.name}>{course.name}</SelectItem>
       ))}
     </Select>
-  );
+  )
 }

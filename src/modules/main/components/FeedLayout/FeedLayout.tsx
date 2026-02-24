@@ -1,18 +1,18 @@
-import { Button } from "@heroui/button";
-import { useDisclosure } from "@heroui/modal";
-import { Plus } from "lucide-react";
+import { Button } from "@heroui/button"
+import { useDisclosure } from "@heroui/modal"
+import { Plus } from "lucide-react"
 
-import { CreatePostDialog } from "../CreatePostDialog/CreatePostDialog";
+import { CreatePostDialog } from "../CreatePostDialog/CreatePostDialog"
 
-import Navigation from "./components/Navigation";
+import Navigation from "./components/Navigation"
 
 interface FeedLayoutProps {
-  children: React.ReactNode;
-  societyId?: number;
+  children: React.ReactNode
+  societyId?: number
 }
 
 function FeedLayout({ children, societyId }: FeedLayoutProps) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   return (
     <div className="min-h-screen bg-gray-50/50 dark:bg-zinc-950">
@@ -59,7 +59,7 @@ function FeedLayout({ children, societyId }: FeedLayoutProps) {
         onOpenChange={onOpenChange}
       />
     </div>
-  );
+  )
 }
 
-export default FeedLayout;
+export default FeedLayout

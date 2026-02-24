@@ -1,13 +1,13 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useQuery, UseQueryOptions } from "@tanstack/react-query"
 
-import { getCommentsCount } from "../../services/comment";
+import { getCommentsCount } from "../../services/comment"
 
-import RESOURCES from "@/constants/resources";
+import RESOURCES from "@/constants/resources"
 
 type UseCommentsCountOptions = Omit<
   UseQueryOptions<number, Error>,
   "queryKey" | "queryFn"
->;
+>
 
 export function useCommentsCount(
   postId: number,
@@ -17,5 +17,5 @@ export function useCommentsCount(
     queryKey: [RESOURCES.COMMENTS, postId, "count"],
     queryFn: async () => (await getCommentsCount(postId)).data,
     ...options,
-  });
+  })
 }

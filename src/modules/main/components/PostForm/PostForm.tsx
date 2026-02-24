@@ -1,23 +1,23 @@
-import { Button } from "@heroui/button";
-import { Input, Textarea } from "@heroui/input";
-import { Select, SelectItem } from "@heroui/select";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, Controller } from "react-hook-form";
+import { Button } from "@heroui/button"
+import { Input, Textarea } from "@heroui/input"
+import { Select, SelectItem } from "@heroui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm, Controller } from "react-hook-form"
 
-import { useCreatePost } from "../../hooks/mutations/useCreatePost";
-import { useUserGroups } from "../../hooks/queries/useUserGroups";
-import { postSchema } from "../../schemas/post";
-import { CreatePostParams } from "../../types";
+import { useCreatePost } from "../../hooks/mutations/useCreatePost"
+import { useUserGroups } from "../../hooks/queries/useUserGroups"
+import { postSchema } from "../../schemas/post"
+import { CreatePostParams } from "../../types"
 
-import FileInput from "@/components/FileInput/FileInput";
+import FileInput from "@/components/FileInput/FileInput"
 
 interface PostFormProps {
-  societyId?: number;
-  onClose?: () => void;
+  societyId?: number
+  onClose?: () => void
 }
 
 function PostForm({ societyId, onClose }: PostFormProps = {}) {
-  const { data: userGroups } = useUserGroups();
+  const { data: userGroups } = useUserGroups()
 
   const { register, handleSubmit, watch, reset, setValue, control } =
     useForm<CreatePostParams>({
@@ -28,9 +28,9 @@ function PostForm({ societyId, onClose }: PostFormProps = {}) {
         society_id: societyId || null,
       },
       resolver: zodResolver(postSchema),
-    });
+    })
 
-  const { mutate: createPost, isPending } = useCreatePost({ onSuccess });
+  const { mutate: createPost, isPending } = useCreatePost({ onSuccess })
 
   function onSuccess() {
     reset({
@@ -38,25 +38,25 @@ function PostForm({ societyId, onClose }: PostFormProps = {}) {
       content: "",
       media: null,
       society_id: societyId || null,
-    });
-    onClose?.();
+    })
+    onClose?.()
   }
 
   function onSubmit(data: CreatePostParams) {
     const postData = {
       ...data,
       society_id: data.society_id ? Number(data.society_id) : null,
-    };
+    }
 
-    createPost(postData);
+    createPost(postData)
   }
 
   function handleMediaChange(file: File | null) {
-    setValue("media", file);
+    setValue("media", file)
   }
 
-  const title = watch("title");
-  const media = watch("media");
+  const title = watch("title")
+  const media = watch("media")
 
   return (
     <form
@@ -89,9 +89,9 @@ function PostForm({ societyId, onClose }: PostFormProps = {}) {
               selectedKeys={field.value ? [String(field.value)] : []}
               variant="bordered"
               onSelectionChange={(keys) => {
-                const selected = Array.from(keys)[0];
+                const selected = Array.from(keys)[0]
 
-                field.onChange(selected ? Number(selected) : null);
+                field.onChange(selected ? Number(selected) : null)
               }}
             >
               {userGroups.map((group) => (
@@ -123,7 +123,7 @@ function PostForm({ societyId, onClose }: PostFormProps = {}) {
         </div>
       </div>
     </form>
-  );
+  )
 }
 
-export default PostForm;
+export default PostForm

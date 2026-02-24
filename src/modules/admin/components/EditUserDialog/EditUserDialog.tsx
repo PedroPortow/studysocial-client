@@ -1,52 +1,52 @@
-import { useEffect, useState } from "react";
-import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
+import { useEffect, useState } from "react"
+import { Button } from "@heroui/button"
+import { Input } from "@heroui/input"
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@heroui/modal";
+} from "@heroui/modal"
 
-import { useUpdateUser } from "../../hooks/mutations/useUpdateUser";
+import { useUpdateUser } from "../../hooks/mutations/useUpdateUser"
 
-import { User, ROLE } from "@/types/user";
-import { RoleSelect } from "@/components/RoleSelect";
-import { CourseSelect } from "@/components/CourseSelect";
+import { User, ROLE } from "@/types/user"
+import { RoleSelect } from "@/components/RoleSelect"
+import { CourseSelect } from "@/components/CourseSelect"
 
 type EditUserDialogProps = {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-  user: User | null;
-};
+  isOpen: boolean
+  onOpenChange: (open: boolean) => void
+  user: User | null
+}
 
 export function EditUserDialog({
   isOpen,
   onOpenChange,
   user,
 }: EditUserDialogProps) {
-  const [fullName, setFullName] = useState("");
-  const [role, setRole] = useState<ROLE>(ROLE.USER);
-  const [courseName, setCourseName] = useState("");
+  const [fullName, setFullName] = useState("")
+  const [role, setRole] = useState<ROLE>(ROLE.USER)
+  const [courseName, setCourseName] = useState("")
 
   const { mutate: updateUser, isPending } = useUpdateUser({
     onSuccess: () => {
-      onOpenChange(false);
+      onOpenChange(false)
     },
-  });
+  })
 
   useEffect(() => {
     if (user) {
-      setFullName(user.full_name);
-      setRole(user.role);
-      setCourseName(user.course?.name || "");
+      setFullName(user.full_name)
+      setRole(user.role)
+      setCourseName(user.course?.name || "")
     }
-  }, [user]);
+  }, [user])
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user || !fullName.trim()) return;
+    e.preventDefault()
+    if (!user || !fullName.trim()) return
 
     updateUser({
       email: user.email,
@@ -55,10 +55,10 @@ export function EditUserDialog({
         role,
         course_name: courseName || undefined,
       },
-    });
-  };
+    })
+  }
 
-  if (!user) return null;
+  if (!user) return null
 
   return (
     <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -110,5 +110,5 @@ export function EditUserDialog({
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }

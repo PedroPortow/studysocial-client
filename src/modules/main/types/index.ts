@@ -1,40 +1,40 @@
-import { z } from "zod";
+import { z } from "zod"
 
-import { postSchema } from "../schemas/post";
+import { postSchema } from "../schemas/post"
 
-import { User } from "@/types";
+import { User } from "@/types"
 
-export type CreatePostParams = z.infer<typeof postSchema>;
+export type CreatePostParams = z.infer<typeof postSchema>
 
 export type Post = {
-  id: number;
-  title: string;
-  content: string;
-  media_url: string | null;
-  society_id: number | null;
-  society_name: string | null;
-  created_at: string;
-  updated_at: string;
-  user: User;
-};
+  id: number
+  title: string
+  content: string
+  media_url: string | null
+  society_id: number | null
+  society_name: string | null
+  created_at: string
+  updated_at: string
+  user: User
+}
 
 export type LikeResponse = {
-  post_id: number;
-  likes_count: number;
-  is_liked: boolean;
-};
+  post_id: number
+  likes_count: number
+  is_liked: boolean
+}
 
 export type Comment = {
-  id: number;
-  content: string;
-  created_at: string;
-  updated_at: string;
-  parent_id: number | null;
-  user: User;
-  replies: Comment[];
-};
+  id: number
+  content: string
+  created_at: string
+  updated_at: string
+  parent_id: number | null
+  user: User
+  replies: Comment[]
+}
 
 export type CreateCommentParams = {
-  content: string;
-  parent_id?: number | null;
-};
+  content: string
+  parent_id?: number | null
+}

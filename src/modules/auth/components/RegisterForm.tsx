@@ -1,28 +1,28 @@
-import { Avatar } from "@heroui/avatar";
-import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
-import { Select, SelectItem } from "@heroui/select";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Camera } from "lucide-react";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Avatar } from "@heroui/avatar"
+import { Button } from "@heroui/button"
+import { Input } from "@heroui/input"
+import { Select, SelectItem } from "@heroui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Camera } from "lucide-react"
+import { useState } from "react"
+import { Controller, useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 
-import { useRegister } from "../hooks/mutations/useRegister";
-import { useCourses } from "../hooks/queries/useCourses";
-import { registerSchema } from "../schemas";
-import { RegisterFormData } from "../types";
+import { useRegister } from "../hooks/mutations/useRegister"
+import { useCourses } from "../hooks/queries/useCourses"
+import { registerSchema } from "../schemas"
+import { RegisterFormData } from "../types"
 
 function RegisterForm() {
-  const navigate = useNavigate();
-  const { data: courses, isPending: isLoadingCourses } = useCourses();
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const navigate = useNavigate()
+  const { data: courses, isPending: isLoadingCourses } = useCourses()
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
 
   const { mutate: registerUser, isPending } = useRegister({
     onSuccess: () => {
-      navigate("/login");
+      navigate("/login")
     },
-  });
+  })
 
   const {
     register,
@@ -40,27 +40,27 @@ function RegisterForm() {
       avatar: null,
     },
     resolver: zodResolver(registerSchema),
-  });
+  })
 
   function handleAvatarChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
+    const file = event.target.files?.[0]
 
     if (file) {
-      setValue("avatar", file);
-      const reader = new FileReader();
+      setValue("avatar", file)
+      const reader = new FileReader()
 
       reader.onloadend = () => {
-        setAvatarPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+        setAvatarPreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
     }
   }
 
   function onSubmit(data: RegisterFormData) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { confirm_password, ...registerData } = data;
+    const { confirm_password, ...registerData } = data
 
-    registerUser(registerData);
+    registerUser(registerData)
   }
 
   return (
@@ -115,9 +115,9 @@ function RegisterForm() {
             placeholder="Selecione seu curso"
             selectedKeys={field.value ? [field.value] : []}
             onSelectionChange={(keys) => {
-              const selected = Array.from(keys)[0];
+              const selected = Array.from(keys)[0]
 
-              field.onChange(selected?.toString() || "");
+              field.onChange(selected?.toString() || "")
             }}
           >
             {(courses || []).map((course) => (
@@ -153,7 +153,7 @@ function RegisterForm() {
         Criar conta
       </Button>
     </form>
-  );
+  )
 }
 
-export default RegisterForm;
+export default RegisterForm

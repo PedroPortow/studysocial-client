@@ -1,18 +1,18 @@
-import { Avatar } from "@heroui/avatar";
-import { Button } from "@heroui/button";
+import { Avatar } from "@heroui/avatar"
+import { Button } from "@heroui/button"
 import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownSection,
   DropdownTrigger,
-} from "@heroui/dropdown";
-import { ChevronDown, User } from "lucide-react";
+} from "@heroui/dropdown"
+import { ChevronDown, User } from "lucide-react"
 
-import { useAuth } from "../../../hooks/useAuth";
+import { useAuth } from "../../../hooks/useAuth"
 
 function UserDropdown() {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth()
 
   return (
     <Dropdown placement="bottom-end">
@@ -51,7 +51,7 @@ function UserDropdown() {
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>
-  );
+  )
 }
 
-export default UserDropdown;
+export default UserDropdown

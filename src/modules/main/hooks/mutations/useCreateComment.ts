@@ -2,13 +2,13 @@ import {
   useMutation,
   UseMutationOptions,
   useQueryClient,
-} from "@tanstack/react-query";
-import { AxiosResponse } from "axios";
+} from "@tanstack/react-query"
+import { AxiosResponse } from "axios"
 
-import { createComment } from "../../services/comment";
-import { Comment, CreateCommentParams } from "../../types";
+import { createComment } from "../../services/comment"
+import { Comment, CreateCommentParams } from "../../types"
 
-import RESOURCES from "@/constants/resources";
+import RESOURCES from "@/constants/resources"
 
 type UseCreateCommentOptions = Omit<
   UseMutationOptions<
@@ -17,10 +17,10 @@ type UseCreateCommentOptions = Omit<
     { postId: number; data: CreateCommentParams }
   >,
   "mutationFn"
->;
+>
 
 export function useCreateComment(options?: UseCreateCommentOptions) {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   return useMutation({
     ...options,
@@ -29,10 +29,10 @@ export function useCreateComment(options?: UseCreateCommentOptions) {
       // Invalida comentários e contagem
       queryClient.invalidateQueries({
         queryKey: [RESOURCES.COMMENTS, variables.postId],
-      });
+      })
 
       // @ts-expect-error - é a vida
-      options?.onSuccess?.(data, variables, context);
+      options?.onSuccess?.(data, variables, context)
     },
-  });
+  })
 }

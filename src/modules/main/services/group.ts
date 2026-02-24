@@ -1,32 +1,32 @@
-import { CreateGroupParams, Group } from "@/types";
-import { api } from "@/lib/axios";
+import { CreateGroupParams, Group } from "@/types"
+import { api } from "@/lib/axios"
 
-const BASE_KEY = "/society";
+const BASE_KEY = "/society"
 
 export async function getGroups() {
-  return await api.get<Group[]>(BASE_KEY);
+  return await api.get<Group[]>(BASE_KEY)
 }
 
 export async function getGroup(id: number) {
-  return await api.get<Group>(`${BASE_KEY}/${id}`);
+  return await api.get<Group>(`${BASE_KEY}/${id}`)
 }
 
 export async function createGroup(data: CreateGroupParams) {
-  return await api.post<Group>(BASE_KEY, data);
+  return await api.post<Group>(BASE_KEY, data)
 }
 
 export async function deleteGroup(id: number) {
-  return await api.delete(`${BASE_KEY}/${id}`);
+  return await api.delete(`${BASE_KEY}/${id}`)
 }
 
 export async function joinGroup(id: number) {
-  return await api.post<Group>(`${BASE_KEY}/${id}/join`);
+  return await api.post<Group>(`${BASE_KEY}/${id}/join`)
 }
 
 export async function leaveGroup(id: number) {
-  return await api.post<Group>(`${BASE_KEY}/${id}/leave`);
+  return await api.post<Group>(`${BASE_KEY}/${id}/leave`)
 }
 
 export async function getUserGroups() {
-  return await api.get<Group[]>(`${BASE_KEY}/my`);
+  return await api.get<Group[]>(`${BASE_KEY}/my`)
 }

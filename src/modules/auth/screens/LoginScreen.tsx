@@ -1,9 +1,15 @@
-import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
-import { Link } from "react-router-dom";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card"
+import { Link, Navigate } from "react-router-dom"
 
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/LoginForm"
+
+import { useAuth } from "@/modules/main/hooks/useAuth"
 
 function LoginScreen() {
+  const { user } = useAuth()
+
+  if (user) return <Navigate replace to="/" />
+
   return (
     <div className="flex flex-col items-center justify-center h-screen gap-8">
       <h1 className="text-2xl font-bold">Bem vindo ao StudySocial!</h1>
@@ -22,7 +28,7 @@ function LoginScreen() {
         </CardFooter>
       </Card>
     </div>
-  );
+  )
 }
 
-export default LoginScreen;
+export default LoginScreen

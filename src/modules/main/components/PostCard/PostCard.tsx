@@ -1,24 +1,24 @@
-import { Avatar } from "@heroui/avatar";
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
-import { Chip } from "@heroui/chip";
-import { Heart, MessageCircle, Trash2, Users } from "lucide-react";
-import { memo } from "react";
-import { useNavigate } from "react-router-dom";
+import { Avatar } from "@heroui/avatar"
+import { Button } from "@heroui/button"
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card"
+import { Chip } from "@heroui/chip"
+import { Heart, MessageCircle, Trash2, Users } from "lucide-react"
+import { memo } from "react"
+import { useNavigate } from "react-router-dom"
 
-import { useToggleLike } from "../../hooks/mutations/useToggleLike";
-import { useCommentsCount } from "../../hooks/queries/useCommentsCount";
-import { useLikeStatus } from "../../hooks/queries/useLikeStatus";
-import { useAuth } from "../../hooks/useAuth";
-import { Post } from "../../types";
+import { useToggleLike } from "../../hooks/mutations/useToggleLike"
+import { useCommentsCount } from "../../hooks/queries/useCommentsCount"
+import { useLikeStatus } from "../../hooks/queries/useLikeStatus"
+import { useAuth } from "../../hooks/useAuth"
+import { Post } from "../../types"
 
-import { formatDate } from "@/utils";
+import { formatDate } from "@/utils"
 
 type PostCardProps = {
-  post: Post;
-  isPressable?: boolean;
-  onRemovePress?: (post: Post) => void;
-};
+  post: Post
+  isPressable?: boolean
+  onRemovePress?: (post: Post) => void
+}
 
 const PostCard = memo(
   function PostCardImpl({
@@ -26,30 +26,30 @@ const PostCard = memo(
     isPressable = false,
     onRemovePress,
   }: PostCardProps) {
-    const { user } = useAuth();
-    const navigate = useNavigate();
+    const { user } = useAuth()
+    const navigate = useNavigate()
 
-    const { data: likeStatus } = useLikeStatus(post.id);
-    const { data: commentsCount } = useCommentsCount(post.id);
-    const { mutate: toggleLike, isPending: isLiking } = useToggleLike();
+    const { data: likeStatus } = useLikeStatus(post.id)
+    const { data: commentsCount } = useCommentsCount(post.id)
+    const { mutate: toggleLike, isPending: isLiking } = useToggleLike()
 
-    const isOwner = user?.email === post.user.email || user?.role === "ADMIN";
-    const isLiked = likeStatus?.is_liked ?? false;
-    const likesCount = likeStatus?.likes_count ?? 0;
+    const isOwner = user?.email === post.user.email || user?.role === "ADMIN"
+    const isLiked = likeStatus?.is_liked ?? false
+    const likesCount = likeStatus?.likes_count ?? 0
 
     function viewPost() {
-      navigate(`/posts/${post.id}`);
+      navigate(`/posts/${post.id}`)
     }
 
     function handleLike() {
-      toggleLike(post.id);
+      toggleLike(post.id)
     }
 
     function handleComment() {
-      navigate(`/posts/${post.id}?comment=true`);
+      navigate(`/posts/${post.id}?comment=true`)
     }
 
-    const _onRemovePress = () => onRemovePress?.(post);
+    const _onRemovePress = () => onRemovePress?.(post)
 
     return (
       <Card
@@ -175,14 +175,14 @@ const PostCard = memo(
           </div>
         </CardFooter>
       </Card>
-    );
+    )
   },
   (prevProps, nextProps) => {
     return (
       prevProps.post.id === nextProps.post.id &&
       prevProps.onRemovePress === nextProps.onRemovePress
-    );
+    )
   },
-);
+)
 
-export default PostCard;
+export default PostCard

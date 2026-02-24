@@ -1,7 +1,7 @@
-import { Suspense } from "react";
+import { Suspense } from "react"
 
-import Feed from "../../components/Feed/Feed";
-import FeedLayout from "../../components/FeedLayout/FeedLayout";
+import Feed from "../../components/Feed/Feed"
+import FeedLayout from "../../components/FeedLayout/FeedLayout"
 
 function FeedScreen() {
   return (
@@ -12,7 +12,7 @@ function FeedScreen() {
         </Suspense>
       </div>
     </FeedLayout>
-  );
+  )
 }
 
-export default FeedScreen;
+export default FeedScreen

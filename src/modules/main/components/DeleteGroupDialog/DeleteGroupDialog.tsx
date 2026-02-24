@@ -1,20 +1,20 @@
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/button"
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@heroui/modal";
+} from "@heroui/modal"
 
-import { useDeleteGroup } from "../../hooks/mutations/useDeleteGroup";
+import { useDeleteGroup } from "../../hooks/mutations/useDeleteGroup"
 
 type DeleteGroupDialogProps = {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-  groupId?: number;
-  groupName?: string;
-};
+  isOpen: boolean
+  onOpenChange: (open: boolean) => void
+  groupId?: number
+  groupName?: string
+}
 
 export function DeleteGroupDialog({
   isOpen,
@@ -24,15 +24,15 @@ export function DeleteGroupDialog({
 }: DeleteGroupDialogProps) {
   const { mutate: deleteGroup, isPending: isDeleting } = useDeleteGroup({
     onSuccess: () => {
-      onOpenChange(false);
+      onOpenChange(false)
     },
-  });
+  })
 
   const confirmDelete = () => {
     if (groupId) {
-      deleteGroup(groupId);
+      deleteGroup(groupId)
     }
-  };
+  }
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -62,5 +62,5 @@ export function DeleteGroupDialog({
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }

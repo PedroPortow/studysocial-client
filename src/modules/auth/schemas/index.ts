@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const loginSchema = z.object({
   email: z
@@ -10,7 +10,7 @@ export const loginSchema = z.object({
   password: z
     .string()
     .min(4, { message: "Senha deve ter pelo menos 4 caracteres" }),
-});
+})
 
 export const registerSchema = z
   .object({
@@ -33,4 +33,4 @@ export const registerSchema = z
   .refine((data) => data.password === data.confirm_password, {
     message: "As senhas não coincidem",
     path: ["confirm_password"],
-  });
+  })

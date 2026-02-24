@@ -12,15 +12,15 @@ import { loginParams, LoginResponse } from "../types"
 
 import { Ban, BanType } from "@/types/ban"
 import { formatDate } from "@/utils"
+import { useAuth } from "@/modules/main/hooks/useAuth"
 
 function LoginForm() {
   const navigate = useNavigate()
+  const { login: setAuth } = useAuth()
 
   function onSuccess(response: AxiosResponse<LoginResponse>) {
-    localStorage.setItem("token", response.data.token)
-    setTimeout(() => {
-      navigate("/")
-    }, 1000)
+    setAuth(response.data.token, response.data.user)
+    navigate("/")
   }
 
   function onError(error: AxiosError) {

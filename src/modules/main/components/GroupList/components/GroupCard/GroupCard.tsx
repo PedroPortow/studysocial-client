@@ -1,24 +1,18 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  CardProps,
-} from "@heroui/card";
-import { Button } from "@heroui/button";
-import { Plus, Trash, Users, X } from "lucide-react";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { Card, CardBody, CardFooter, CardHeader, CardProps } from "@heroui/card"
+import { Button } from "@heroui/button"
+import { Plus, Trash, Users, X } from "lucide-react"
 
-import { useCurrentUser } from "../../../../hooks/queries/useCurrentUser";
-import { DeleteGroupDialog } from "../../../DeleteGroupDialog/DeleteGroupDialog";
+import { useCurrentUser } from "../../../../hooks/queries/useCurrentUser"
+import { DeleteGroupDialog } from "../../../DeleteGroupDialog/DeleteGroupDialog"
 
-import { Group } from "@/types";
+import { Group } from "@/types"
 interface GroupCardProps extends CardProps {
-  group: Group;
-  displayOwnerBadge: boolean;
-  onJoinPress?: () => void;
-  onLeavePress?: () => void;
+  group: Group
+  displayOwnerBadge: boolean
+  onJoinPress?: () => void
+  onLeavePress?: () => void
 }
 
 function GroupCard({
@@ -29,22 +23,22 @@ function GroupCard({
   displayOwnerBadge,
   ...rest
 }: GroupCardProps) {
-  const navigate = useNavigate();
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const { data: currentUser } = useCurrentUser({ enabled: true });
+  const navigate = useNavigate()
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const { data: currentUser } = useCurrentUser({ enabled: true })
 
-  const isOwner = currentUser?.email === group.owner.email;
-  const isAdmin = currentUser?.role === "ADMIN";
-  const isMember = group.is_member;
-  const canDelete = isOwner || isAdmin;
+  const isOwner = currentUser?.email === group.owner.email
+  const isAdmin = currentUser?.role === "ADMIN"
+  const isMember = group.is_member
+  const canDelete = isOwner || isAdmin
 
   const handleCardClick = () => {
-    navigate(`/grupos/${group.id}`);
-  };
+    navigate(`/grupos/${group.id}`)
+  }
 
   const handleDelete = () => {
-    setIsDeleteModalOpen(true);
-  };
+    setIsDeleteModalOpen(true)
+  }
 
   return (
     <>
@@ -135,7 +129,7 @@ function GroupCard({
         onOpenChange={setIsDeleteModalOpen}
       />
     </>
-  );
+  )
 }
 
-export default GroupCard;
+export default GroupCard

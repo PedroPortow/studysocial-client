@@ -1,21 +1,21 @@
-import { Button } from "@heroui/button";
-import { Card, CardBody } from "@heroui/card";
-import { BookOpen, Home, Plus, Users } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useDisclosure } from "@heroui/modal";
+import { Button } from "@heroui/button"
+import { Card, CardBody } from "@heroui/card"
+import { BookOpen, Home, Plus, Users } from "lucide-react"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useDisclosure } from "@heroui/modal"
 
-import { CreatePostDialog } from "../../CreatePostDialog/CreatePostDialog";
+import { CreatePostDialog } from "../../CreatePostDialog/CreatePostDialog"
 
 function Navigation() {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   const menuItems = [
     { label: "Início", icon: Home, path: "/" },
     { label: "Grupos", icon: Users, path: "/grupos" },
     { label: "Diário", icon: BookOpen, path: "/diary" },
-  ];
+  ]
 
   return (
     <Card
@@ -24,9 +24,9 @@ function Navigation() {
     >
       <CardBody className="flex flex-col gap-2 p-4">
         {menuItems.map((item) => {
-          const isActive = pathname.split("/")[1] === item.path.split("/")[1];
+          const isActive = pathname.split("/")[1] === item.path.split("/")[1]
 
-          const Icon = item.icon;
+          const Icon = item.icon
 
           return (
             <Button
@@ -43,7 +43,7 @@ function Navigation() {
               <Icon fill={isActive ? "currentColor" : "none"} size={20} />
               {item.label}
             </Button>
-          );
+          )
         })}
 
         <div className="h-px bg-default-100 my-2" />
@@ -60,7 +60,7 @@ function Navigation() {
         </Button>
       </CardBody>
     </Card>
-  );
+  )
 }
 
-export default Navigation;
+export default Navigation

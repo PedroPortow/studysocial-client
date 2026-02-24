@@ -1,4 +1,4 @@
-import Header from "./components/Header";
+import Header from "./components/Header"
 
 function MainLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -6,7 +6,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       <Header />
       {children}
     </main>
-  );
+  )
 }
 
-export default MainLayout;
+export default MainLayout

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const postSchema = z.object({
   title: z
@@ -8,4 +8,4 @@ export const postSchema = z.object({
   content: z.string().optional(),
   media: z.instanceof(File).nullable().optional(),
   society_id: z.number().nullable().optional(),
-});
+})

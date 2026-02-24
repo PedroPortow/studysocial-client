@@ -1,19 +1,19 @@
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/button"
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@heroui/modal";
+} from "@heroui/modal"
 
-import { useDeletePost } from "../../hooks/mutations/useDeletePost";
+import { useDeletePost } from "../../hooks/mutations/useDeletePost"
 
 type RemovePostModalProps = {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-  postId?: number;
-};
+  isOpen: boolean
+  onOpenChange: (open: boolean) => void
+  postId?: number
+}
 
 export function RemovePostModal({
   isOpen,
@@ -22,7 +22,7 @@ export function RemovePostModal({
 }: RemovePostModalProps) {
   const { mutate: deletePost, isPending: isDeleting } = useDeletePost({
     onSuccess: () => onOpenChange(false),
-  });
+  })
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -52,5 +52,5 @@ export function RemovePostModal({
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }

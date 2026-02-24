@@ -1,24 +1,24 @@
-import { Button } from "@heroui/button";
-import { Textarea } from "@heroui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { forwardRef } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { Button } from "@heroui/button"
+import { Textarea } from "@heroui/input"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { forwardRef } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
-import { useCreateComment } from "../../hooks/mutations/useCreateComment";
+import { useCreateComment } from "../../hooks/mutations/useCreateComment"
 
 const commentSchema = z.object({
   content: z.string().min(1, { message: "O comentário não pode estar vazio" }),
-});
+})
 
-type CommentFormData = z.infer<typeof commentSchema>;
+type CommentFormData = z.infer<typeof commentSchema>
 
 type CommentFormProps = {
-  postId: number;
-  parentId?: number | null;
-  onSuccess?: () => void;
-  autoFocus?: boolean;
-};
+  postId: number
+  parentId?: number | null
+  onSuccess?: () => void
+  autoFocus?: boolean
+}
 
 const CommentForm = forwardRef<HTMLTextAreaElement, CommentFormProps>(
   function CommentForm(
@@ -30,14 +30,14 @@ const CommentForm = forwardRef<HTMLTextAreaElement, CommentFormProps>(
         content: "",
       },
       resolver: zodResolver(commentSchema),
-    });
+    })
 
     const { mutate: createComment, isPending } = useCreateComment({
       onSuccess: () => {
-        reset();
-        onSuccess?.();
+        reset()
+        onSuccess?.()
       },
-    });
+    })
 
     function onSubmit(data: CommentFormData) {
       createComment({
@@ -46,20 +46,20 @@ const CommentForm = forwardRef<HTMLTextAreaElement, CommentFormProps>(
           content: data.content,
           parent_id: parentId,
         },
-      });
+      })
     }
 
-    const { ref: registerRef, ...registerRest } = register("content");
+    const { ref: registerRef, ...registerRest } = register("content")
 
     return (
       <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
         <Textarea
           ref={(e) => {
-            registerRef(e);
+            registerRef(e)
             if (ref && typeof ref === "function") {
-              ref(e);
+              ref(e)
             } else if (ref) {
-              ref.current = e;
+              ref.current = e
             }
           }}
           autoFocus={autoFocus}
@@ -75,8 +75,8 @@ const CommentForm = forwardRef<HTMLTextAreaElement, CommentFormProps>(
           </Button>
         </div>
       </form>
-    );
+    )
   },
-);
+)
 
-export default CommentForm;
+export default CommentForm

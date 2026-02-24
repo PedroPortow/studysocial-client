@@ -1,4 +1,4 @@
-import { Skeleton } from "@heroui/skeleton";
+import { Skeleton } from "@heroui/skeleton"
 
 function Loader() {
   return (
@@ -7,7 +7,7 @@ function Loader() {
         <Skeleton key={index} className="w-full h-48" />
       ))}
     </div>
-  );
+  )
 }
 
-export default Loader;
+export default Loader

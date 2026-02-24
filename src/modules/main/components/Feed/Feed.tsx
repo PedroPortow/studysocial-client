@@ -1,30 +1,30 @@
-import { useDisclosure } from "@heroui/modal";
-import { useCallback, useState } from "react";
+import { useDisclosure } from "@heroui/modal"
+import { useCallback, useState } from "react"
 
-import { usePosts } from "../../hooks/queries/usePosts";
-import { Post } from "../../types";
-import PostCard from "../PostCard/PostCard";
-import { RemovePostModal } from "../RemovePostModal/RemovePostModal";
+import { usePosts } from "../../hooks/queries/usePosts"
+import { Post } from "../../types"
+import PostCard from "../PostCard/PostCard"
+import { RemovePostModal } from "../RemovePostModal/RemovePostModal"
 
-import Loader from "./Loader";
+import Loader from "./Loader"
 
 interface FeedProps {
-  societyId?: number;
+  societyId?: number
 }
 
 function Feed({ societyId }: FeedProps = {}) {
-  const { data: posts } = usePosts({ societyId });
+  const { data: posts } = usePosts({ societyId })
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null)
 
   const openRemovePostModal = useCallback(
     (post: Post) => {
-      setSelectedPost(post);
-      onOpen();
+      setSelectedPost(post)
+      onOpen()
     },
     [setSelectedPost, onOpen],
-  );
+  )
 
   if (!posts || posts.length === 0) {
     // todo: fazer um componente de empty state global e arrumar isso aq
@@ -32,7 +32,7 @@ function Feed({ societyId }: FeedProps = {}) {
       <div className="flex justify-center py-8">
         <p className="text-default-500">Nenhuma publicação encontrada</p>
       </div>
-    );
+    )
   }
 
   return (
@@ -51,9 +51,9 @@ function Feed({ societyId }: FeedProps = {}) {
         onOpenChange={onOpenChange}
       />
     </div>
-  );
+  )
 }
 
-Feed.Loader = Loader;
+Feed.Loader = Loader
 
-export default Feed;
+export default Feed

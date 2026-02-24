@@ -1,6 +1,6 @@
-import { Avatar } from "@heroui/avatar";
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Avatar } from "@heroui/avatar"
+import { Button } from "@heroui/button"
+import { Card, CardBody, CardHeader } from "@heroui/card"
 import {
   Modal,
   ModalBody,
@@ -8,33 +8,33 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure,
-} from "@heroui/modal";
-import { Trash2 } from "lucide-react";
-import { useState } from "react";
+} from "@heroui/modal"
+import { Trash2 } from "lucide-react"
+import { useState } from "react"
 
-import CommentForm from "../../components/Comment/CommentForm";
-import { useDeleteComment } from "../../hooks/mutations/useDeleteComment";
-import { useAuth } from "../../hooks/useAuth";
-import { Comment as CommentType } from "../../types";
+import CommentForm from "../../components/Comment/CommentForm"
+import { useDeleteComment } from "../../hooks/mutations/useDeleteComment"
+import { useAuth } from "../../hooks/useAuth"
+import { Comment as CommentType } from "../../types"
 
-import { formatDate } from "@/utils";
+import { formatDate } from "@/utils"
 
 type CommentProps = {
-  comment: CommentType;
-  postId: number;
-  depth?: number;
-};
+  comment: CommentType
+  postId: number
+  depth?: number
+}
 
 function Comment({ comment, postId, depth = 0 }: CommentProps) {
-  const { user } = useAuth();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [isReplying, setIsReplying] = useState(false);
+  const { user } = useAuth()
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [isReplying, setIsReplying] = useState(false)
 
   const { mutate: deleteComment, isPending } = useDeleteComment({
     onSuccess: () => onOpenChange(),
-  });
+  })
 
-  const isOwner = user?.email === comment.user.email;
+  const isOwner = user?.email === comment.user.email
 
   return (
     <>
@@ -138,7 +138,7 @@ function Comment({ comment, postId, depth = 0 }: CommentProps) {
         </ModalContent>
       </Modal>
     </>
-  );
+  )
 }
 
-export default Comment;
+export default Comment

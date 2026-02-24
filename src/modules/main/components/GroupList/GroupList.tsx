@@ -1,25 +1,25 @@
-import { useMemo } from "react";
+import { useMemo } from "react"
 
-import { useGroups } from "../../hooks/queries/useGroups";
+import { useGroups } from "../../hooks/queries/useGroups"
 
-import { GroupCard } from "./components";
+import { GroupCard } from "./components"
 
 interface GroupListProps {
-  searchTerm?: string;
+  searchTerm?: string
 }
 
 function GroupList({ searchTerm = "" }: GroupListProps) {
-  const { data: groups = [] } = useGroups();
+  const { data: groups = [] } = useGroups()
 
   const filteredGroups = useMemo(() => {
-    if (!groups.length) return [];
+    if (!groups.length) return []
 
-    if (!searchTerm) return groups;
+    if (!searchTerm) return groups
 
     return groups.filter((group) =>
       group.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-  }, [groups, searchTerm]);
+    )
+  }, [groups, searchTerm])
 
   if (!groups.length || !filteredGroups.length) {
     return (
@@ -28,7 +28,7 @@ function GroupList({ searchTerm = "" }: GroupListProps) {
           ? `Nenhum grupo encontrado com "${searchTerm}".`
           : "Nenhum grupo disponível ainda."}
       </div>
-    );
+    )
   }
 
   return (
@@ -41,10 +41,10 @@ function GroupList({ searchTerm = "" }: GroupListProps) {
             isPressable
             group={group}
           />
-        );
+        )
       })}
     </div>
-  );
+  )
 }
 
-export default GroupList;
+export default GroupList

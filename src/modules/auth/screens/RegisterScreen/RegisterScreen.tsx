@@ -1,7 +1,7 @@
-import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
-import { Link } from "react-router-dom";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card"
+import { Link } from "react-router-dom"
 
-import RegisterForm from "../../components/RegisterForm";
+import RegisterForm from "../../components/RegisterForm"
 
 function RegisterScreen() {
   return (
@@ -22,7 +22,7 @@ function RegisterScreen() {
         </CardFooter>
       </Card>
     </div>
-  );
+  )
 }
 
-export default RegisterScreen;
+export default RegisterScreen

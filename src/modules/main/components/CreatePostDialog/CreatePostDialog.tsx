@@ -4,14 +4,14 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from "@heroui/modal";
+} from "@heroui/modal"
 
-import PostForm from "../PostForm/PostForm";
+import PostForm from "../PostForm/PostForm"
 
 interface CreatePostDialogProps {
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
-  societyId?: number;
+  isOpen: boolean
+  onOpenChange: (isOpen: boolean) => void
+  societyId?: number
 }
 
 export function CreatePostDialog({
@@ -35,5 +35,5 @@ export function CreatePostDialog({
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }
