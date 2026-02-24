@@ -14,7 +14,7 @@ function Navigation() {
   const menuItems = [
     { label: "Início", icon: Home, path: "/" },
     { label: "Grupos", icon: Users, path: "/grupos" },
-    { label: "Diário", icon: BookOpen, path: "/diary" },
+    { label: "Diário", icon: BookOpen, path: "/diarioacademico" },
   ]
 
   return (

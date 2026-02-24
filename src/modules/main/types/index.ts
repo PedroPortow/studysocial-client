@@ -38,3 +38,19 @@ export type CreateCommentParams = {
   content: string
   parent_id?: number | null
 }
+
+export type Note = {
+  id: number
+  title: string
+  content: string | null
+  subject_id: number
+  created_at: string
+  updated_at: string
+  user: User
+}
+
+export type CreateNoteParams = {
+  title: string
+  content?: string
+  subject_id: number
+}
