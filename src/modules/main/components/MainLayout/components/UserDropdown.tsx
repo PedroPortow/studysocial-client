@@ -7,7 +7,7 @@ import {
   DropdownSection,
   DropdownTrigger,
 } from "@heroui/dropdown"
-import { ChevronDown, User } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 
 import { useAuth } from "../../../hooks/useAuth"
 
@@ -31,14 +31,6 @@ function UserDropdown() {
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Menu do usuário">
-        <DropdownSection showDivider>
-          <DropdownItem
-            key="profile"
-            startContent={<User className="text-slate-500" size={18} />}
-          >
-            Perfil
-          </DropdownItem>
-        </DropdownSection>
         <DropdownSection>
           <DropdownItem
             key="logout"
