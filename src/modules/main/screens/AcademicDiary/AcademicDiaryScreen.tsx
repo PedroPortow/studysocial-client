@@ -62,7 +62,7 @@ function AcademicDiaryScreen() {
               Nova Anotação
             </Button>
           }
-          description="Gerencie suas anotações por disciplina ou não"
+          description="Gerencie suas anotações por disciplina"
           title="Anotações"
         >
           <Select

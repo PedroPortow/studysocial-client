@@ -14,6 +14,7 @@ type DeleteGroupDialogProps = {
   onOpenChange: (open: boolean) => void
   groupId?: number
   groupName?: string
+  onDeleted?: () => void
 }
 
 export function DeleteGroupDialog({
@@ -21,10 +22,12 @@ export function DeleteGroupDialog({
   onOpenChange,
   groupId,
   groupName,
+  onDeleted,
 }: DeleteGroupDialogProps) {
   const { mutate: deleteGroup, isPending: isDeleting } = useDeleteGroup({
     onSuccess: () => {
       onOpenChange(false)
+      onDeleted?.()
     },
   })
 
@@ -41,7 +44,9 @@ export function DeleteGroupDialog({
           <>
             <ModalHeader>Excluir Grupo</ModalHeader>
             <ModalBody>
-              <p>Tem certeza que deseja excluir o grupo "{groupName}"?</p>
+              <p>
+                Tem certeza que deseja excluir o grupo &quot;{groupName}&quot;?
+              </p>
               <p className="text-sm text-default-500">
                 Esta ação não pode ser desfeita.
               </p>

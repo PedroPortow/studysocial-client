@@ -1,20 +1,23 @@
+import { useState } from "react"
 import { Button } from "@heroui/button"
 import { Spinner } from "@heroui/spinner"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Plus } from "lucide-react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Suspense } from "react"
 
 import FeedLayout from "../../components/FeedLayout/FeedLayout"
+import { CreatePostDialog } from "../../components/CreatePostDialog/CreatePostDialog"
+import Feed from "../../components/Feed/Feed"
+import { GroupCard } from "../../components/GroupList/components"
 import { useGroup } from "../../hooks/queries/useGroup"
 import { useCurrentUser } from "../../hooks/queries/useCurrentUser"
 import { useJoinGroup } from "../../hooks/mutations/useJoinGroup"
 import { useLeaveGroup } from "../../hooks/mutations/useLeaveGroup"
-import Feed from "../../components/Feed/Feed"
-import { GroupCard } from "../../components/GroupList/components"
 
 function GroupDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false)
 
   const groupId = Number(id)
 
@@ -61,14 +64,33 @@ function GroupDetail() {
         <GroupCard
           displayOwnerBadge
           group={group}
+          onGroupDeleted={() => navigate("/grupos")}
           onJoinPress={!isOwner && !isMember ? handleJoinGroup : undefined}
           onLeavePress={!isOwner && isMember ? handleLeaveGroup : undefined}
         />
+
+        {isMember && (
+          <Button
+            className="w-fit self-end"
+            color="primary"
+            size="sm"
+            startContent={<Plus size={16} />}
+            onPress={() => setIsCreatePostOpen(true)}
+          >
+            Novo Post
+          </Button>
+        )}
 
         <Suspense fallback={<Feed.Loader />}>
           <Feed societyId={groupId} />
         </Suspense>
       </div>
+
+      <CreatePostDialog
+        isOpen={isCreatePostOpen}
+        societyId={groupId}
+        onOpenChange={setIsCreatePostOpen}
+      />
     </FeedLayout>
   )
 }

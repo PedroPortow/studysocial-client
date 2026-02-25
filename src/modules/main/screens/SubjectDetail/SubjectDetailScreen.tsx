@@ -1,14 +1,21 @@
+import { Suspense, useState } from "react"
 import { Button } from "@heroui/button"
 import { Spinner } from "@heroui/spinner"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Plus } from "lucide-react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import FeedLayout from "../../components/FeedLayout/FeedLayout"
+import NotesList from "../../components/NotesList/NotesList"
+import { NoteDialog } from "../../components/NotesList/components/NoteDialog"
+import { AbsencesTable } from "../../components/AbsencesTable/AbsencesTable"
 import { useSubject } from "../../hooks/queries/useSubject"
+import DiarySection from "../AcademicDiary/components/DiarySection"
 
 function SubjectDetailScreen() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const [isCreateNoteOpen, setIsCreateNoteOpen] = useState(false)
+  const [isAbsenceDialogOpen, setIsAbsenceDialogOpen] = useState(false)
 
   const subjectId = Number(id)
   const { data: subject, isPending } = useSubject(subjectId)
@@ -33,7 +40,7 @@ function SubjectDetailScreen() {
 
   return (
     <FeedLayout>
-      <div className="flex flex-col gap-4 w-full max-w-xl">
+      <div className="flex flex-col gap-8 w-full max-w-3xl">
         <Button
           className="w-fit"
           startContent={<ArrowLeft size={16} />}
@@ -50,8 +57,52 @@ function SubjectDetailScreen() {
           </span>
         </div>
 
-        {/* Future: Assessment and Absence sections go here */}
+        <DiarySection
+          action={
+            <Button
+              color="primary"
+              size="sm"
+              startContent={<Plus size={16} />}
+              onPress={() => setIsAbsenceDialogOpen(true)}
+            >
+              Nova Falta
+            </Button>
+          }
+          description="Controle suas faltas nesta disciplina"
+          title="Faltas"
+        >
+          <AbsencesTable
+            isCreateOpen={isAbsenceDialogOpen}
+            subjectId={subjectId}
+            onCreateOpenChange={setIsAbsenceDialogOpen}
+          />
+        </DiarySection>
+
+        <DiarySection
+          action={
+            <Button
+              color="primary"
+              size="sm"
+              startContent={<Plus size={16} />}
+              onPress={() => setIsCreateNoteOpen(true)}
+            >
+              Nova Anotação
+            </Button>
+          }
+          description="Anotações desta disciplina"
+          title="Anotações"
+        >
+          <Suspense fallback={<div>Carregando anotações...</div>}>
+            <NotesList subjectId={subjectId} />
+          </Suspense>
+        </DiarySection>
       </div>
+
+      <NoteDialog
+        defaultSubjectId={subjectId}
+        isOpen={isCreateNoteOpen}
+        onOpenChange={setIsCreateNoteOpen}
+      />
     </FeedLayout>
   )
 }

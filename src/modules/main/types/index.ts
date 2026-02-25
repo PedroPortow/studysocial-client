@@ -66,3 +66,26 @@ export type CreateNoteParams = {
   content?: string
   subject_id: number
 }
+
+export type Absence = {
+  id: number
+  subject_id: number
+  quantity: number
+  date: string
+  reason: string | null
+  created_at: string
+  updated_at: string
+}
+
+export type CreateAbsenceParams = {
+  subject_id: number
+  quantity: number
+  date: string
+  reason?: string
+}
+
+export type UpdateAbsenceParams = {
+  quantity?: number
+  date?: string
+  reason?: string
+}

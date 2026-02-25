@@ -19,9 +19,15 @@ type NoteDialogProps = {
   isOpen: boolean
   onOpenChange: (open: boolean) => void
   note?: Note | null
+  defaultSubjectId?: number
 }
 
-export function NoteDialog({ isOpen, onOpenChange, note }: NoteDialogProps) {
+export function NoteDialog({
+  isOpen,
+  onOpenChange,
+  note,
+  defaultSubjectId,
+}: NoteDialogProps) {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
   const [subjectId, setSubjectId] = useState<string>("")
@@ -49,12 +55,14 @@ export function NoteDialog({ isOpen, onOpenChange, note }: NoteDialogProps) {
       setTitle(note.title)
       setContent(note.content ?? "")
       setSubjectId(String(note.subject_id))
+    } else if (isOpen && defaultSubjectId != null) {
+      setSubjectId(String(defaultSubjectId))
     } else if (!isOpen) {
       setTitle("")
       setContent("")
       setSubjectId("")
     }
-  }, [note, isOpen])
+  }, [note, isOpen, defaultSubjectId])
 
   function resetAndClose() {
     setTitle("")

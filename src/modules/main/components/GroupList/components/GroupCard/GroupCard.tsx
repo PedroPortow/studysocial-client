@@ -13,12 +13,14 @@ interface GroupCardProps extends CardProps {
   displayOwnerBadge: boolean
   onJoinPress?: () => void
   onLeavePress?: () => void
+  onGroupDeleted?: () => void
 }
 
 function GroupCard({
   group,
   onJoinPress,
   onLeavePress,
+  onGroupDeleted,
   isPressable,
   displayOwnerBadge,
   ...rest
@@ -127,6 +129,7 @@ function GroupCard({
         groupName={group.name}
         isOpen={isDeleteModalOpen}
         onOpenChange={setIsDeleteModalOpen}
+        onDeleted={onGroupDeleted}
       />
     </>
   )
