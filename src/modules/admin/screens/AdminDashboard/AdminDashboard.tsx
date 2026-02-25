@@ -32,7 +32,7 @@ function AdminDashboard() {
               Banir Usuário
             </Button>
           }
-          title="Usuários Banidos"
+          title="Banimentos"
         >
           <Suspense fallback={<Spinner size="lg" />}>
             <BansTable />

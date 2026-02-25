@@ -39,8 +39,6 @@ function LoginForm() {
         description += `\n\nMotivo: ${ban.reason}`
       }
 
-      console.log("eae")
-
       addToast({
         title: "Você foi banido!",
         description,

@@ -4,6 +4,8 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import AdminRoute from "./components/AdminRoute"
 import LoginScreen from "./modules/auth/screens/LoginScreen"
 import RegisterScreen from "./modules/auth/screens/RegisterScreen/RegisterScreen"
+import ForgotPasswordScreen from "./modules/auth/screens/ForgotPasswordScreen"
+import ResetPasswordScreen from "./modules/auth/screens/ResetPasswordScreen"
 import FeedScreen from "./modules/main/screens/Feed/FeedScreen"
 import PostScreen from "./modules/main/screens/Post/PostScreen"
 import GroupsScreen from "./modules/main/screens/Groups/Groups"
@@ -17,13 +19,18 @@ function App() {
     <Routes>
       <Route element={<LoginScreen />} path="/login" />
       <Route element={<RegisterScreen />} path="/registrar" />
+      <Route element={<ForgotPasswordScreen />} path="/recuperar-senha" />
+      <Route element={<ResetPasswordScreen />} path="/redefinir-senha" />
       <Route element={<ProtectedRoute />}>
         <Route element={<FeedScreen />} path="/" />
         <Route element={<PostScreen />} path="/posts/:id" />
         <Route element={<GroupsScreen />} path="/grupos" />
         <Route element={<GroupDetailScreen />} path="/grupos/:id" />
         <Route element={<AcademicDiary />} path="/diarioacademico" />
-        <Route element={<SubjectDetailScreen />} path="/diarioacademico/disciplinas/:id" />
+        <Route
+          element={<SubjectDetailScreen />}
+          path="/diarioacademico/disciplinas/:id"
+        />
       </Route>
       <Route element={<AdminRoute />}>
         <Route element={<AdminDashboard />} path="/admin" />

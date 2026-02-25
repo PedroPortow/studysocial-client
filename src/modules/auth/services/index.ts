@@ -1,4 +1,10 @@
-import { Course, loginParams, RegisterParams } from "../types"
+import {
+  Course,
+  ForgotPasswordParams,
+  loginParams,
+  RegisterParams,
+  ResetPasswordParams,
+} from "../types"
 
 import { api } from "@/lib/axios"
 import { User } from "@/types"
@@ -33,4 +39,12 @@ export async function getCurrentUser() {
 
 export async function getCourses() {
   return await api.get<Course[]>("/courses")
+}
+
+export async function forgotPassword(data: ForgotPasswordParams) {
+  return await api.post(`${BASE_KEY}/forgot-password`, data)
+}
+
+export async function resetPassword(data: ResetPasswordParams) {
+  return await api.post(`${BASE_KEY}/reset-password`, data)
 }
